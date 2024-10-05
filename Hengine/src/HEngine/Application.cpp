@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "Log.h"
+
 
 namespace HEngine
 {
@@ -13,6 +15,12 @@ namespace HEngine
 	}
 	void Application::Run()
 	{
-		while (true);
+
+		WindowResizeEvent e(1280, 720);
+		if (e.IsInCategory(EventCategoryApplication))
+		{
+			HE_TRACE(e.ToString());
+		}
+
 	}
 }
