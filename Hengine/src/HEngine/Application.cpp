@@ -1,3 +1,5 @@
+#include "hepch.h"
+
 #include "Application.h"
 #include "Log.h"
 

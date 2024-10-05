@@ -34,6 +34,7 @@
     <ClInclude Include="src\HEngine\Log.h">
       <Filter>HEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\hepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Application.cpp">
@@ -42,5 +43,6 @@
     <ClCompile Include="src\HEngine\Log.cpp">
       <Filter>HEngine</Filter>
     </ClCompile>
+    <ClCompile Include="src\hepch.cpp" />
   </ItemGroup>
 </Project>
