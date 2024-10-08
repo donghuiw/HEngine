@@ -47,6 +47,8 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\hepch.h" />
+    <ClInclude Include="src\HEngine\Layer.h" />
+    <ClInclude Include="src\HEngine\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Application.cpp">
@@ -59,5 +61,7 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\hepch.cpp" />
+    <ClCompile Include="src\HEngine\Layer.cpp" />
+    <ClCompile Include="src\HEngine\LayerStack.cpp" />
   </ItemGroup>
 </Project>
