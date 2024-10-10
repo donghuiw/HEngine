@@ -1,5 +1,6 @@
 workspace "HEngine"
 	architecture "x64"
+	startproject "SandBox"
 
 	configurations
 	{
@@ -23,6 +24,7 @@ project "HEngine"
 	location "HEngine"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -52,9 +54,9 @@ project "HEngine"
 		"ImGui",
 		"opengl32.lib"
 	}
+
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -72,23 +74,24 @@ project "HEngine"
 
 	filter "configurations:Debug"
 		defines "HE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "HE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "HE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "SandBox"
 	location "SandBox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -112,7 +115,6 @@ project "SandBox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -122,15 +124,15 @@ project "SandBox"
 
 	filter "configurations:Debug"
 		defines "HE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-	defines "HE_RELEASE"
-	buildoptions "/MD"
-	optimize "On"
+		defines "HE_RELEASE"
+		runtime "Release"
+		optimize "On"
 
 	filter "configurations:Dist"
-	defines "HE_DIST"
-	buildoptions "/MD"
-	optimize "On"
+		defines "HE_DIST"
+		runtime "Release"
+		optimize "On"
