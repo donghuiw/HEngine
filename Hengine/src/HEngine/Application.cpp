@@ -55,7 +55,7 @@ namespace HEngine
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			auto[x, y] = Input::GetMousePosition();
-			HE_CORE_TRACE("{0}, {1}", x, y);
+			//HE_CORE_TRACE("{0}, {1}", x, y);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
