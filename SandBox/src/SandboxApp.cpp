@@ -1,4 +1,5 @@
 #include "HEngine.h"
+#include "imgui/imgui.h"
 
 class ExampleLayer : public HEngine::Layer
 {
@@ -29,7 +30,6 @@ public:
 	SandBox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new HEngine::ImGuiLayer());
 	}
 	~SandBox()
 	{

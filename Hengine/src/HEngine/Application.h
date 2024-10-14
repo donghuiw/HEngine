@@ -5,6 +5,7 @@
 #include "LayerStack.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
+#include "HEngine/ImGui/ImGuiLayer.h"
 
 namespace HEngine
 {
@@ -23,7 +24,9 @@ namespace HEngine
 		inline static Application& Get() { return *s_Instance;  }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

@@ -8,7 +8,7 @@
 
 [submodule "HEngine/vendor/imgui"]
 	path = HEngine/vendor/imgui
-	url = https://github.com/ocornut/imgui
+	url = https://github.com/TheCherno/imgui
 
 [submodule "HEngine/vendor/glm"]
 	path = HEngine/vendor/glm
