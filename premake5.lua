@@ -23,9 +23,10 @@ include "HEngine/vendor/imgui"
 
 project "HEngine"
 	location "HEngine"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -40,7 +41,10 @@ project "HEngine"
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
-
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 	includedirs
 	{
 		"%{prj.name}/src",
@@ -60,7 +64,6 @@ project "HEngine"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -70,32 +73,27 @@ project "HEngine"
 				"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			"{COPYDIR} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir ..  "/SandBox/\"" 
-			--xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\HEngine\HEngine.dll ..\bin\Debug-windows-x86_64\SandBox\
-		}
-
 	filter "configurations:Debug"
 		defines "HE_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "HE_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HE_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "SandBox"
 	location "SandBox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -120,25 +118,25 @@ project "SandBox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
 		{
-				"HE_PLATFORM_WINDOWS"
+			"HE_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
 		defines "HE_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "HE_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HE_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
+		

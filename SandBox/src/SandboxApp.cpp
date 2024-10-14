@@ -8,6 +8,12 @@ public:
 		: Layer("Example")
 	{
 	}
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
 	void OnUpdate() override
 	{
 		if (HEngine::Input::IsKeyPressed(HE_KEY_TAB))
