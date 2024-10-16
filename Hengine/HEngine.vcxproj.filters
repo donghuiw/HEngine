@@ -1350,6 +1350,9 @@
     <ClInclude Include="src\HEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\HEngine\Renderer\Shader.h" />
+    <ClInclude Include="src\HEngine\Renderer\Renderer.h" />
+    <ClInclude Include="src\HEngine\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Application.cpp">
@@ -1381,5 +1384,8 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\HEngine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\HEngine\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\HEngine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
   </ItemGroup>
 </Project>
