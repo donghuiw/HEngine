@@ -11,8 +11,6 @@ namespace HEngine
 
 	Application* Application::s_Instance = nullptr;
 
-	
-
 	Application::Application()
 	{
 		HE_CORE_ASSERT(!s_Instance, "Application already exists!");
@@ -126,10 +124,6 @@ namespace HEngine
 		m_BlueShader.reset(new Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
 	}
 
-	Application::~Application()
-	{
-	}
-
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
@@ -164,8 +158,6 @@ namespace HEngine
 			m_Shader->Bind();
 			m_VertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-
-
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

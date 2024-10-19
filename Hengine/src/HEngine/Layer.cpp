@@ -7,10 +7,6 @@ namespace HEngine
 		: m_DebugName(debugName)
 	{
 	}
-	Layer::~Layer()
-	{
-
-	}
 
 }
 
