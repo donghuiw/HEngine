@@ -9,6 +9,7 @@
 #include "HEngine/Renderer/Shader.h"
 #include "HEngine/Renderer/Buffer.h"
 #include "HEngine/Renderer/VertxArray.h"
+#include "HEngine/Renderer/OrthographiCamera.h"
 
 namespace HEngine
 {
@@ -38,6 +39,8 @@ namespace HEngine
 		
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographiCamera m_Camera;
 	private:
 		static Application* s_Instance;
 	};
