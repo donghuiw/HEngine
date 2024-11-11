@@ -9,6 +9,7 @@ namespace HEngine
 	class Renderer
 	{
 	public:
+		static void Init();
 		static void BeginScene(OrthographiCamera& camera);
 		static void EndScene();
 
