@@ -16,6 +16,7 @@ IncludeDir["GLFW"] = "HEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "HEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "HEngine/vendor/imgui"
 IncludeDir["glm"] = "HEngine/vendor/glm"
+IncludeDir["stb_image"] = "HEngine/vendor/stb_image"
 
 group "Dependencies"
 	include "HEngine/vendor/GLFW"
@@ -39,6 +40,8 @@ project "HEngine"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -53,6 +56,7 @@ project "HEngine"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}",
 		"%{prj.name}/vendor/spdlog/include"
 	}
 
