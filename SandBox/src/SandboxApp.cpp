@@ -212,7 +212,7 @@ public:
 
 		HEngine::Renderer::EndScene();
 	}
-	virtual void OnImGuiRender() override
+	 void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
