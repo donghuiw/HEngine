@@ -10,6 +10,7 @@
 #include "HEngine/Input.h"
 #include "HEngine/KeyCodes.h"
 #include "HEngine/MouseButtonCodes.h"
+#include "HEngine/OrthographicCameraController.h"
 
 #include "HEngine/ImGui/ImGuiLayer.h"
 //-------------------------------------------------------
