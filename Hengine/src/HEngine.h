@@ -1,16 +1,16 @@
 #pragma once
 
 // For use by HEngine application---------------------
-#include "HEngine/Application.h"
-#include "HEngine/Layer.h"
-#include "HEngine/Log.h"
+#include "HEngine/Core/Application.h"
+#include "HEngine/Core/Layer.h"
+#include "HEngine/Core/Log.h"
 
 #include "HEngine/Core/Timestep.h"
 
-#include "HEngine/Input.h"
-#include "HEngine/KeyCodes.h"
-#include "HEngine/MouseButtonCodes.h"
-#include "HEngine/OrthographicCameraController.h"
+#include "HEngine/Core/Input.h"
+#include "HEngine//Core/KeyCodes.h"
+#include "HEngine//Core/MouseButtonCodes.h"
+#include "HEngine/Renderer/OrthographicCameraController.h"
 
 #include "HEngine/ImGui/ImGuiLayer.h"
 //-------------------------------------------------------
@@ -28,5 +28,5 @@
 //-------------------------------------------------------
 
 //------- Entry Point -----------------------------------
-#include "HEngine/EntryPoint.h"
+#include "HEngine/Core/EntryPoint.h"
 //-------------------------------------------------------

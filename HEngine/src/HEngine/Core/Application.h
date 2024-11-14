@@ -3,8 +3,8 @@
 #include "Window.h"
 #include "Core.h"
 #include "LayerStack.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "HEngine/Events/Event.h"
+#include "HEngine/Events/ApplicationEvent.h"
 #include "HEngine/ImGui/ImGuiLayer.h"
 
 namespace HEngine

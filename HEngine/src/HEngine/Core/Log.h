@@ -6,7 +6,7 @@
 #include "spdlog/fmt/ostr.h"
 
 #if FMT_VERSION >= 90000
-#include "Events/Event.h"
+#include "HEngine/Events/Event.h"
 template <> struct fmt::formatter<HEngine::Event> : ostream_formatter {};
 #endif
 

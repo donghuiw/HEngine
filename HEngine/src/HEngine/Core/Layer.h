@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
+#include "HEngine/Events/Event.h"
 #include "HEngine/Core/Timestep.h"
 
 namespace HEngine
