@@ -1,5 +1,6 @@
 #include "hepch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace HEngine
@@ -9,6 +10,7 @@ namespace HEngine
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 	void Renderer::BeginScene(OrthographiCamera& camera)
 	{
