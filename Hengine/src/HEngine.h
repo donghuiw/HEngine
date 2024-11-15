@@ -20,13 +20,9 @@
 #include "HEngine/Renderer/RenderCommand.h"
 
 #include "HEngine/Renderer/Buffer.h"
-#include "HEngine/Renderer/VertxArray.h"
+#include "HEngine/Renderer/VertexArray.h"
 #include "HEngine/Renderer/Shader.h"
 #include "HEngine/Renderer/Texture.h"
 
 #include "HEngine/Renderer/OrthographiCamera.h"
-//-------------------------------------------------------
-
-//------- Entry Point -----------------------------------
-#include "HEngine/Core/EntryPoint.h"
 //-------------------------------------------------------

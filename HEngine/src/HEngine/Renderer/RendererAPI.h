@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "VertxArray.h"
+#include "VertexArray.h"
 
 namespace HEngine
 {

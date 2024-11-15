@@ -1,5 +1,5 @@
 #include "hepch.h"
-#include "OpenGLVertxArray.h"
+#include "OpenGLVertexArray.h"
 
 #include "glad/glad.h"
 
