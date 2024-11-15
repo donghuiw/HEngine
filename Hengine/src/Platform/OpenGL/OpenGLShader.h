@@ -4,7 +4,7 @@
 #include "glm/glm.hpp"
 
 // TODO: REMOVE!
-typedef unsigned int GLenum;
+using GLenum = unsigned int;
 
 namespace HEngine
 {
@@ -17,6 +17,11 @@ namespace HEngine
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual void SetInt(const std::string& name, int value) override;
+		virtual void SetFloat3(const std::string& name, const glm::vec3& value) override;
+		virtual void SetFloat4(const std::string& name, const glm::vec4& value) override;
+		virtual void SetMat4(const std::string& name, const glm::mat4& value) override;
+
 		virtual const std::string& GetName() const override { return m_Name; }
 
 		void UploadUniformInt(const std::string& name, int value);
