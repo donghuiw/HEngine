@@ -1,7 +1,7 @@
 #include "hepch.h"
-#include "OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 
 namespace HEngine
 {
@@ -9,17 +9,17 @@ namespace HEngine
 	{
 		switch (type)
 		{
-			case HEngine::ShaderDataType::Float:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Float2:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Float3:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Float4:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Mat3:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Mat4:			return GL_FLOAT;
-			case HEngine::ShaderDataType::Int:			    return GL_INT;
-			case HEngine::ShaderDataType::Int2:				return GL_INT;
-			case HEngine::ShaderDataType::Int3:				return GL_INT;
-			case HEngine::ShaderDataType::Int4:				return GL_INT;
-			case HEngine::ShaderDataType::Bool:				return GL_BOOL;
+		case ShaderDataType::Float:			return GL_FLOAT;
+		case ShaderDataType::Float2:		return GL_FLOAT;
+		case ShaderDataType::Float3:		return GL_FLOAT;
+		case ShaderDataType::Float4:		return GL_FLOAT;
+		case ShaderDataType::Mat3:			return GL_FLOAT;
+		case ShaderDataType::Mat4:			return GL_FLOAT;
+		case ShaderDataType::Int:			    return GL_INT;
+		case ShaderDataType::Int2:			return GL_INT;
+		case ShaderDataType::Int3:			return GL_INT;
+		case ShaderDataType::Int4:			return GL_INT;
+		case ShaderDataType::Bool:			return GL_BOOL;
 		}
 		HE_CORE_ASSERT(false, "Unknow ShaderDataType!");
 		return 0;

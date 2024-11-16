@@ -1,7 +1,7 @@
 #include "hepch.h"
-#include "Texture.h"
+#include "HEngine/Renderer/Texture.h"
 
-#include "Renderer.h"
+#include "HEngine/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace HEngine 

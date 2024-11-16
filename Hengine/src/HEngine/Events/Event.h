@@ -30,7 +30,7 @@ namespace HEngine
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class HENGINE_API Event
+	class  Event
 	{
 		friend class EventDispatcher;
 	public:
@@ -40,9 +40,9 @@ namespace HEngine
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline  bool IsInCategory(EventCategory category) const
+		inline bool IsInCategory(EventCategory category)
 		{
-			//return GetCategoryFlags() & category;
+			return GetCategoryFlags() & category;
 		}
 	};
 

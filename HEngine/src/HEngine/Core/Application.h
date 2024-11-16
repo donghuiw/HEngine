@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Window.h"
-#include "Core.h"
-#include "LayerStack.h"
+#include "HEngine/Core/Window.h"
+#include "HEngine/Core/Core.h"
+#include "HEngine/Core/LayerStack.h"
 #include "HEngine/Events/Event.h"
 #include "HEngine/Events/ApplicationEvent.h"
 #include "HEngine/ImGui/ImGuiLayer.h"
@@ -13,7 +13,7 @@ namespace HEngine
 	{
 	public:
 		Application();
-		virtual ~Application() = default;
+		virtual ~Application();
 		void Run();
 		void OnEvent(Event& e);
 

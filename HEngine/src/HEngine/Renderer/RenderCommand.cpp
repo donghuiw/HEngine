@@ -1,9 +1,8 @@
 #include "hepch.h"
-#include "RenderCommand.h"
+#include "HEngine/Renderer/RenderCommand.h"
 
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 namespace HEngine
 {
-	Scope<RendererAPI> RenderCommand::s_RendererAPI = CreateScope<OpenGLRendererAPI>();
+	Scope<RendererAPI> RenderCommand::s_RendererAPI = RendererAPI::Create();
 }

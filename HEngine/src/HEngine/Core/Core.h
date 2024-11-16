@@ -43,23 +43,6 @@
 #error "Unknown platform!"
 #endif // End of platform detection
 
-
-// DLL support
-#ifdef HE_PLATFORM_WINDOWS
-	#if HE_DYNAMIC_LINK
-		#ifdef HE_BUILD_DLL
-			#define HENGINE_API __declspec(dllexport)
-		#else
-			#define HENGINE_API __declspec(dllimport)
-		#endif
-	#else
-		#define HENGINE_API
-	#endif
-#else
-	#error HEngine only supports Windows!
-#endif // End of DLL support
-
-
 #ifdef HE_DEBUG
 	#define HE_ENABLE_ASSERTS
 #endif

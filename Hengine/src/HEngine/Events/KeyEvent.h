@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Event.h"
+#include "HEngine/Events/Event.h"
 
 namespace HEngine
 {
-	class HENGINE_API KeyEvent : public Event
+	class  KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode;  }
@@ -16,7 +16,7 @@ namespace HEngine
 
 		int m_KeyCode;
 	};
-	class HENGINE_API KeyPressedEvent : public KeyEvent
+	class  KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycod, int repeatCount)
@@ -34,7 +34,7 @@ namespace HEngine
 	private:
 		int m_RepeatCount;
 	};
-	class HENGINE_API KeyTypedEvent : public KeyEvent
+	class  KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)
@@ -49,7 +49,7 @@ namespace HEngine
 		
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
-	class HENGINE_API KeyReleasedEvent : public KeyEvent
+	class  KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)

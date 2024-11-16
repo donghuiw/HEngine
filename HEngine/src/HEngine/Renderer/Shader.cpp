@@ -1,7 +1,8 @@
 #include "hepch.h"
-#include "Shader.h"
 
-#include "Renderer.h"
+#include "HEngine/Renderer/Shader.h"
+#include "HEngine/Renderer/Renderer.h"
+
 #include "Platform/OpenGL/OpenGLShader.h"
 
 
@@ -12,7 +13,7 @@ namespace HEngine
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    HE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(filepath);
 		}
 
 		HE_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -23,7 +24,7 @@ namespace HEngine
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:			HE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:		return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+			case RendererAPI::API::OpenGL:		return CreateRef<OpenGLShader>(name, vertexSrc, fragmentSrc);
 		}
 		HE_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

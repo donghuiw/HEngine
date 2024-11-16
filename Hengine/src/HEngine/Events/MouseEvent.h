@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Event.h"
+#include "HEngine/Events/Event.h"
 
 namespace HEngine
 {
-	class HENGINE_API MouseMovedEvent : public Event
+	class  MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -25,7 +25,7 @@ namespace HEngine
 	private:
 		float m_MouseX, m_MouseY;
 	};
-	class HENGINE_API MouseScrolledEvent : public Event
+	class  MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset)
@@ -47,7 +47,7 @@ namespace HEngine
 		float m_XOffset, m_YOffset;
 	};
 
-	class HENGINE_API MouseButtonEvent : public Event
+	class  MouseButtonEvent : public Event
 	{
 	public:
 		inline int GetMouseButton() const { return m_Button; }
@@ -60,7 +60,7 @@ namespace HEngine
 		int m_Button;
 	};
 
-	class HENGINE_API MouseButtonPressedEvent : public MouseButtonEvent
+	class  MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -76,7 +76,7 @@ namespace HEngine
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class HENGINE_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class  MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

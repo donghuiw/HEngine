@@ -2,7 +2,7 @@
 
 #include "hepch.h"
 
-#include "Core.h"
+#include "HEngine/Core/Core.h"
 #include "HEngine/Events/Event.h"
 
 namespace HEngine
@@ -22,7 +22,7 @@ namespace HEngine
 	};
 
 	// Interface representing a desktop system based Window
-	class HENGINE_API Window
+	class  Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
@@ -41,6 +41,6 @@ namespace HEngine
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(const WindowProps& props = WindowProps());
+		static Scope<Window> Create(const WindowProps& props = WindowProps());
 	};
 }

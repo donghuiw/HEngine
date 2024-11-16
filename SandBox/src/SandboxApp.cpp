@@ -1,12 +1,11 @@
 #include "HEngine.h"
 #include "HEngine/Core/EntryPoint.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
 #include "Sandbox2D.h"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public HEngine::Layer
 {
@@ -21,8 +20,7 @@ public:
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		HEngine::Ref<HEngine::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(HEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
+		HEngine::Ref<HEngine::VertexBuffer> vertexBuffer = (HEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
 		HEngine::BufferLayout layout = {
 			{ HEngine::ShaderDataType::Float3, "a_Position"},
 			{ HEngine::ShaderDataType::Float4, "a_Color" }
@@ -31,8 +29,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		unsigned int indices[3] = { 0, 1, 2 };
-		HEngine::Ref<HEngine::IndexBuffer> indexBuffer;
-		indexBuffer.reset(HEngine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		HEngine::Ref<HEngine::IndexBuffer> indexBuffer = (HEngine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA = (HEngine::VertexArray::Create());
@@ -43,8 +40,7 @@ public:
 			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
-		HEngine::Ref<HEngine::VertexBuffer> squareVB;
-		squareVB.reset(HEngine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		HEngine::Ref<HEngine::VertexBuffer> squareVB = (HEngine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
 			{ HEngine::ShaderDataType::Float3, "a_Position"},
 			{ HEngine::ShaderDataType::Float2 ,"a_TexCoord"}
@@ -52,8 +48,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		HEngine::Ref<HEngine::IndexBuffer> squareIB;
-		squareIB.reset(HEngine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		HEngine::Ref<HEngine::IndexBuffer> squareIB = (HEngine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
@@ -129,8 +124,8 @@ public:
 		 m_Texture = HEngine::Texture2D::Create("assets/textures/Checkerboard.png");
 		 m_ChernoLogoTexture = HEngine::Texture2D::Create("assets/textures/ChernoLogo.png");
 
-		 std::dynamic_pointer_cast<HEngine::OpenGLShader>(textureShader)->Bind();
-		 std::dynamic_pointer_cast<HEngine::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+		 textureShader->Bind();
+		 textureShader->SetInt("u_Texture", 0);
 	}
 	void OnUpdate(HEngine::Timestep ts) override
 	{
@@ -145,8 +140,8 @@ public:
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		std::dynamic_pointer_cast<HEngine::OpenGLShader>(m_FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<HEngine::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+		m_FlatColorShader->Bind();
+		m_FlatColorShader->SetFloat3("u_Color", m_SquareColor);
 
 		for (int y = 0; y < 20; y++)
 		{

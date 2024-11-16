@@ -1,8 +1,8 @@
 #include "hepch.h"
-#include "OpenGLTexture.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
-#include "stb_image.h"
-#include "glad/glad.h"
+#include <stb_image.h>
+#include <glad/glad.h>
 namespace HEngine
 {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OrthographiCamera.h"
-#include "Texture.h"
+#include "HEngine/Renderer/OrthographiCamera.h"
+#include "HEngine/Renderer/Texture.h"
 
 namespace HEngine
 {

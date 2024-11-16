@@ -1,5 +1,6 @@
 #include "hepch.h"
-#include "WindowsWindow.h"
+
+#include "Platform/Windows/WindowsWindow.h"
 #include "HEngine/Events/ApplicationEvent.h"
 #include "HEngine/Events/MouseEvent.h"
 #include "HEngine/Events/KeyEvent.h"
@@ -14,9 +15,9 @@ namespace HEngine
 		HE_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return  CreateScope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -40,7 +41,6 @@ namespace HEngine
 		if (s_GLFWWindowCount == 0)
 		{
 			// TODO: glfwTerminate on system shutdown
-			HE_CORE_INFO("Initializing GLFW");
 			int success = glfwInit();
 			HE_CORE_ASSERT(success, "Could not intialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
@@ -49,7 +49,7 @@ namespace HEngine
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		++s_GLFWWindowCount;
 
-		m_Context = CreateScope<OpenGLContext>(m_Window);
+		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -144,10 +144,10 @@ namespace HEngine
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
+		--s_GLFWWindowCount;
 
-		if (--s_GLFWWindowCount == 0)
+		if (s_GLFWWindowCount == 0)
 		{
-			HE_CORE_INFO("Terminating GLFW");
 			glfwTerminate();
 		}
 	}

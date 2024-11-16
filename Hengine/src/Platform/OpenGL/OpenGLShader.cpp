@@ -1,9 +1,9 @@
 #include "hepch.h"
-#include "OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 #include <fstream>
-#include "glad/glad.h"
-#include "glm/gtc/type_ptr.hpp"
+#include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace HEngine
 {	

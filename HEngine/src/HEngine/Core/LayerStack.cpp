@@ -1,13 +1,8 @@
 #include "hepch.h"
-#include "LayerStack.h"
+#include "HEngine/Core/LayerStack.h"
 
 namespace HEngine
 {
-	
-	LayerStack::LayerStack()
-	{
-	}
-
 	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : m_Layers)

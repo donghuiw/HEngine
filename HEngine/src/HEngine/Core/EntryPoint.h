@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HEngine/Core/Core.h"
 #ifdef HE_PLATFORM_WINDOWS
 
 extern HEngine::Application* HEngine::CreateApplication();
@@ -15,5 +16,4 @@ int main()
 	app->Run();
 	delete app;
 }
-
 #endif

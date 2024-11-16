@@ -1,15 +1,13 @@
 #include "hepch.h"
 
-#include "GLFW/glfw3.h"
-#include "Application.h"
-#include "Log.h"
-#include "Input.h"
+#include <GLFW/glfw3.h>
+#include "HEngine//Core/Application.h"
+#include "HEngine//Core/Log.h"
+#include "HEngine//Core/Input.h"
 #include "HEngine/Renderer/Renderer.h"
 
 namespace HEngine
 {
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -17,15 +15,18 @@ namespace HEngine
 		HE_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window = Window::Create();
+		m_Window->SetEventCallback(HE_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 	}
-
+	Application::~Application()
+	{
+		Renderer::Shutdown();
+	}
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
@@ -37,8 +38,8 @@ namespace HEngine
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(HE_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(HE_BIND_EVENT_FN(Application::OnWindowResize));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{

@@ -1,6 +1,7 @@
 #pragma once
 
 // For use by HEngine application---------------------
+#include "HEngine/Core/Core.h"
 #include "HEngine/Core/Application.h"
 #include "HEngine/Core/Layer.h"
 #include "HEngine/Core/Log.h"
