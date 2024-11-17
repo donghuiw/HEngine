@@ -10,6 +10,9 @@
     <Filter Include="src\HEngine\Core">
       <UniqueIdentifier>{72F366A6-5EEC-85F8-871E-6B7D73766504}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HEngine\Debug">
+      <UniqueIdentifier>{D0BC5173-3CD3-4F09-854A-DB2AF19F2091}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\HEngine\Events">
       <UniqueIdentifier>{7EA913E1-6A8D-D436-D3ED-CE89BFF0BEB8}</UniqueIdentifier>
     </Filter>
@@ -81,14 +84,14 @@
     <ClInclude Include="src\HEngine\Core\Log.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Core\MouseButtonCodes.h">
-      <Filter>src\HEngine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\HEngine\Core\Timestep.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Core\Window.h">
       <Filter>src\HEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Debug\Instrumentor.h">
+      <Filter>src\HEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Events\ApplicationEvent.h">
       <Filter>src\HEngine\Events</Filter>
@@ -121,6 +124,9 @@
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Renderer.h">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Renderer\Renderer2D.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\RendererAPI.h">
@@ -1413,8 +1419,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\HEngine\Debug\Instrumentor.h" />
+    <ClInclude Include="src\HEngine\Core\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Core\Application.cpp">
@@ -1438,6 +1443,9 @@
     <ClCompile Include="src\HEngine\Renderer\Buffer.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\HEngine\Renderer\GrapgicsContext.cpp">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\OrthographiCamera.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
@@ -1448,6 +1456,9 @@
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\Renderer.cpp">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Renderer\Renderer2D.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\RendererAPI.cpp">
@@ -1492,7 +1503,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\HEngine\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\HEngine\Renderer\GrapgicsContext.cpp" />
+    <ClCompile Include="src\HEngine\Core\Window.cpp" />
+    <ClCompile Include="src\HEngine\Core\Input.cpp" />
   </ItemGroup>
 </Project>

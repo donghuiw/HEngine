@@ -157,7 +157,7 @@ void ExampleLayer::OnUpdate(HEngine::Timestep ts)
 		}
 	}
 	// Triangle
-	// Hazel::Renderer::Submit(m_Shader, m_VertexArray);
+	// HEngine::Renderer::Submit(m_Shader, m_VertexArray);
 	auto textureShader = m_ShaderLibrary.Get("Texture");
 
 	m_Texture->Bind();

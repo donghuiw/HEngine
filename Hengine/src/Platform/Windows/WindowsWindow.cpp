@@ -1,10 +1,13 @@
 #include "hepch.h"
 
-#include "Platform/Windows/WindowsWindow.h"
 #include "HEngine/Events/ApplicationEvent.h"
 #include "HEngine/Events/MouseEvent.h"
 #include "HEngine/Events/KeyEvent.h"
+#include "HEngine/Renderer/Renderer.h"
+#include "HEngine/Core/Input.h"
+
 #include "Platform/OpenGL/OpenGLContext.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 namespace HEngine
 {
@@ -13,11 +16,6 @@ namespace HEngine
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		HE_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
-	}
-
-	Scope<Window> Window::Create(const WindowProps& props)
-	{
-		return  CreateScope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -54,7 +52,10 @@ namespace HEngine
 		}
 		{
 			HE_PROFILE_SCOPE("glfwCreateWindow");
-
+			#if defined(HE_DEBUG)
+						if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+							glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			#endif
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
 		}
@@ -90,19 +91,19 @@ namespace HEngine
 				{
 					case GLFW_PRESS:
 					{
-						KeyPressedEvent event(key, 0);
+						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_RELEASE:
 					{
-						KeyReleasedEvent event(key);
+						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_REPEAT:
 					{
-						KeyPressedEvent event(key, 1);
+						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 						data.EventCallback(event);
 						break;
 					}
@@ -116,13 +117,13 @@ namespace HEngine
 				{
 					case GLFW_PRESS:
 					{
-						MouseButtonPressedEvent event(button);
+						MouseButtonPressedEvent event(static_cast<MouseCode>(button));
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_RELEASE:
 					{
-						MouseButtonReleasedEvent event(button);
+						MouseButtonPressedEvent event(static_cast<MouseCode>(button));
 						data.EventCallback(event);
 						break;
 					}
@@ -132,7 +133,7 @@ namespace HEngine
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			KeyTypedEvent event(keycode);
+			KeyTypedEvent event(static_cast<KeyCode>(keycode));
 			data.EventCallback(event);
 		});
 		glfwSetScrollCallback(m_Window, [] (GLFWwindow* window, double xOffset, double yOffset)
