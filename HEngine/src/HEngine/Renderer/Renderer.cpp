@@ -9,6 +9,8 @@ namespace HEngine
 
 	void Renderer::Init()
 	{
+		HE_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

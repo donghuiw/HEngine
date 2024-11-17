@@ -11,21 +11,22 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	HE_PROFILE_FUNCTION();
+
 	m_CheckerboardTexture = HEngine::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
 {
+	HE_PROFILE_FUNCTION();
+
 }
 
 void Sandbox2D::OnUpdate(HEngine::Timestep ts)
 {
 	HE_PROFILE_FUNCTION();
 	// Update
-	{
-		HE_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_CameraController.OnUpdate(ts);
-	}
+	m_CameraController.OnUpdate(ts);
 
 	// Render
 	{
