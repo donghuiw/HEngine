@@ -47,7 +47,7 @@ namespace HEngine
 			HE_PROFILE_SCOPE("glfwInit");
 
 			int success = glfwInit();
-			HE_CORE_ASSERT(success, "Could not intialize GLFW!");
+			HE_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 		{
