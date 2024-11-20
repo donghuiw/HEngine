@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HEngine/Core/Window.h"
-#include "HEngine/Core/Core.h"
+#include "HEngine/Core/Base.h"
 #include "HEngine/Core/LayerStack.h"
 #include "HEngine/Events/Event.h"
 #include "HEngine/Events/ApplicationEvent.h"

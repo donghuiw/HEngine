@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HEngine/Core/Core.h"
+#include "HEngine/Core/Base.h"
 #include "HEngine/Events/Event.h"
 #include "HEngine/Core/Timestep.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "hepch.h"
-#include "HEngine/Core/Core.h"
+#include "HEngine/Core/Base.h"
 
 namespace HEngine
 {

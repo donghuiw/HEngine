@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HEngine/Core/Core.h"
+#include "HEngine/Core/Base.h"
 #ifdef HE_PLATFORM_WINDOWS
 
 extern HEngine::Application* HEngine::CreateApplication();
