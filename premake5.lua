@@ -27,6 +27,8 @@ group "Dependencies"
 	include "HEngine/vendor/Glad"
 	include "HEngine/vendor/imgui"
 
+group ""
+
 project "HEngine"
 	location "HEngine"
 	kind "StaticLib"
@@ -142,3 +144,49 @@ project "SandBox"
 		runtime "Release"
 		optimize "on"
 		
+project "HEngine-Editor"
+	location "HEngine-Editor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"HEngine/vendor/spdlog/include",
+		"HEngine/src",
+		"HEngine/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"HEngine"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+	filter "configurations:Debug"
+		defines "HE_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "HE_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "HE_DIST"
+		runtime "Release"
+		optimize "on"

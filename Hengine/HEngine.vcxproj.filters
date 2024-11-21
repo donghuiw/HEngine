@@ -114,6 +114,9 @@
     <ClInclude Include="src\HEngine\Renderer\Buffer.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\HEngine\Renderer\Framebuffer.h">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\GraphicsContext.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
@@ -148,6 +151,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -1451,6 +1457,9 @@
     <ClCompile Include="src\HEngine\Renderer\Buffer.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\HEngine\Renderer\Framebuffer.cpp">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\GrapgicsContext.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
@@ -1485,6 +1494,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
