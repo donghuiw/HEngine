@@ -15,6 +15,7 @@ namespace HEngine
 
 		void OnUpdate(Timestep ts);
 		void	OnEvent(Event& e);
+		void OnResize(float width, float height);
 
 		OrthographiCamera& GetCamera(){ return m_Camera; }
 		const OrthographiCamera& GetCamera() const { return m_Camera; }
