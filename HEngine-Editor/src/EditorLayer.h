@@ -22,6 +22,9 @@ namespace HEngine
 		//Temp
 		Ref<VertexArray> m_SquareVA;
 		Ref<Shader> m_FlatColorShader;
+		Ref<Scene> m_ActiveScene;
+		entt::entity m_SquaerEntity;
+
 		Ref<Texture2D> m_CheckerboardTexture;
 		Ref<Framebuffer> m_Framebuffer;
 

@@ -18,6 +18,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "HEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "HEngine/vendor/Glad/include"
+IncludeDir["entt"] = "HEngine/vendor/entt/include"
 IncludeDir["ImGui"] = "HEngine/vendor/imgui"
 IncludeDir["glm"] = "HEngine/vendor/glm"
 IncludeDir["stb_image"] = "HEngine/vendor/stb_image"
@@ -63,6 +64,7 @@ project "HEngine"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}",
 		"%{IncludeDir.stb_image}",
 		"%{prj.name}/vendor/spdlog/include"
 	}
@@ -165,7 +167,8 @@ project "HEngine-Editor"
 		"HEngine/vendor/spdlog/include",
 		"HEngine/src",
 		"HEngine/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

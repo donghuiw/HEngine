@@ -14,6 +14,8 @@
 #include "HEngine/Renderer/OrthographicCameraController.h"
 
 #include "HEngine/ImGui/ImGuiLayer.h"
+#include "HEngine/Scene/Scene.h"
+#include "HEngine/Scene/Components.h"
 //-------------------------------------------------------
 
 //------- Renderer-------------------------------------

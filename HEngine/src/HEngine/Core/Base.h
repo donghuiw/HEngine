@@ -47,6 +47,7 @@
 	#define HE_ENABLE_ASSERTS
 #endif
 
+// TODO: Make this macro able to take in no arguments except condition
 #ifdef HE_ENABLE_ASSERTS
 	#define  HE_ASSERT(x, ...) {if(!(x)) { HE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define  HE_CORE_ASSERT(x, ...) { if(!(x)) { HE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
