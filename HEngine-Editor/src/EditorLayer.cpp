@@ -140,13 +140,16 @@ namespace HEngine
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		ImGui::Separator();
-		auto& tag = m_SquaerEntity.GetComponent<TagComponent>().Tag;
-		ImGui::Text("%s", tag.c_str());
+		if (m_SquaerEntity)
+		{
+			ImGui::Separator();
+			auto& tag = m_SquaerEntity.GetComponent<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
 
-		auto& squareColor = m_SquaerEntity.GetComponent<SpriteRendererComponent>().Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		ImGui::Separator();
+			auto& squareColor = m_SquaerEntity.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+			ImGui::Separator();
+		}
 
 		ImGui::End();
 

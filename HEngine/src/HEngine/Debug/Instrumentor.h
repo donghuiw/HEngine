@@ -21,15 +21,10 @@ namespace HEngine {
 
 	class Instrumentor
 	{
-	private:
-		InstrumentationSession* m_CurrentSession;
-		std::ofstream m_OutputStream;
-		std::mutex m_Mutex;
+
 	public:
-		Instrumentor()
-			: m_CurrentSession(nullptr)
-		{
-		}
+		Instrumentor(const Instrumentor&) = delete;
+		Instrumentor(Instrumentor&&) = delete;
 
 		void BeginSession(const std::string& name, const std::string& filepath = "results.json")
 		{
@@ -66,8 +61,6 @@ namespace HEngine {
 		{
 			std::stringstream json;
 
-
-
 			json << ",{";
 			json << "\"cat\":\"function\",";
 			json << "\"dur\":" << (result.End - result.Start) << ',';
@@ -90,6 +83,16 @@ namespace HEngine {
 		}
 
 	private:
+		Instrumentor()
+			: m_CurrentSession(nullptr)
+		{
+		}
+
+		~Instrumentor()
+		{
+			EndSession();
+		}
+
 		void WriteHeader()
 		{
 			m_OutputStream << "{\"otherData\": {},\"traceEvents\":[{}";
@@ -112,6 +115,10 @@ namespace HEngine {
 				m_CurrentSession = nullptr;
 			}
 		}
+	private:
+		std::mutex m_Mutex;
+		InstrumentationSession* m_CurrentSession;
+		std::ofstream m_OutputStream;
 	};
 
 	class InstrumentationTimer
@@ -199,8 +206,10 @@ namespace HEngine {
 #endif
 	#define HE_PROFILE_BEGIN_SESSION(name, filepath) ::HEngine::Instrumentor::Get().BeginSession(name, filepath)
 	#define HE_PROFILE_END_SESSION() ::HEngine::Instrumentor::Get().EndSession()
-#define HZ_PROFILE_SCOPE(name) constexpr auto fixedName = ::HEngine::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
-									::HEngine::InstrumentationTimer timer##__LINE__(fixedName.Data)
+	#define HE_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::HEngine::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
+													   ::HEngine::InstrumentationTimer timer##line(fixedName##line.Data)
+	#define HE_PROFILE_SCOPE_LINE(name, line) HE_PROFILE_SCOPE_LINE2(name, line)
+	#define HE_PROFILE_SCOPE(name) HE_PROFILE_SCOPE_LINE(name, __LINE__)
 	#define HE_PROFILE_FUNCTION() HE_PROFILE_SCOPE(HE_FUNC_SIG)
 #else		
 	#define HE_PROFILE_BEGIN_SESSION(name, filepath)
