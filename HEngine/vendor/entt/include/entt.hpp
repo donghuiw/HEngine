@@ -13057,10 +13057,10 @@ struct null_t {
      * @param entity Identifier with which to compare.
      * @return True if the two elements differ, false otherwise.
      */
-    template<typename Entity>
-    [[nodiscard]] constexpr bool operator!=(const Entity entity) const noexcept {
-        return !(entity == *this);
-    }
+	template<typename Entity>
+	[[nodiscard]] constexpr bool operator!=(const Entity entity) const noexcept {
+		return !(entity == *this);
+	}
 };
 
 /**

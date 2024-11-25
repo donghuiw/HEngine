@@ -120,7 +120,8 @@ project "SandBox"
 		"HEngine/vendor/spdlog/include",
 		"HEngine/src",
 		"HEngine/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

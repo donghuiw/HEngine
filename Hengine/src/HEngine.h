@@ -15,6 +15,7 @@
 
 #include "HEngine/ImGui/ImGuiLayer.h"
 #include "HEngine/Scene/Scene.h"
+#include "HEngine/Scene/Entity.h"
 #include "HEngine/Scene/Components.h"
 //-------------------------------------------------------
 
