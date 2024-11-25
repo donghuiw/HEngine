@@ -2,6 +2,7 @@
 
 #include "HEngine/Renderer/OrthographiCamera.h"
 #include "HEngine/Renderer/Texture.h"
+#include "HEngine/Renderer/Camera.h"
 
 namespace HEngine
 {
@@ -11,6 +12,7 @@ namespace HEngine
 		static void Init();
 		static void Shutdown();
 
+		static void BeginScene(const Camera& camera, const glm::mat4& transform);
 		static void BeginScene(const OrthographiCamera& camera);
 		static void EndScene();
 		static void Flush();
