@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hepch.h"
+#include <sstream>
 
 #include "HEngine/Core/Base.h"
 #include "HEngine/Events/Event.h"

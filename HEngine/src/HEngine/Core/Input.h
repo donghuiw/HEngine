@@ -1,6 +1,7 @@
 #pragma once
 
-#include "HEngine/Core/Base.h"
+#include <glm/glm.hpp>
+
 #include "HEngine/Core/KeyCodes.h"
 #include "HEngine/Core/MouseCodes.h"
 
@@ -15,7 +16,7 @@ namespace HEngine
 
 	private:
 		static bool IsMouseButtonPressed(MouseCode button);
-		static std::pair<float, float> GetMousePosition();
+		static glm::vec2 GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
 	};

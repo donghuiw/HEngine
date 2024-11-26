@@ -91,19 +91,19 @@ namespace HEngine
 				{
 					case GLFW_PRESS:
 					{
-						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+						KeyPressedEvent event(key, 0);
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_RELEASE:
 					{
-						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+						KeyPressedEvent event(key, 0);
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_REPEAT:
 					{
-						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+						KeyPressedEvent event(key, 0);
 						data.EventCallback(event);
 						break;
 					}
@@ -117,13 +117,13 @@ namespace HEngine
 				{
 					case GLFW_PRESS:
 					{
-						MouseButtonPressedEvent event(static_cast<MouseCode>(button));
+						MouseButtonPressedEvent event(button);
 						data.EventCallback(event);
 						break;
 					}
 					case GLFW_RELEASE:
 					{
-						MouseButtonPressedEvent event(static_cast<MouseCode>(button));
+						MouseButtonPressedEvent event(button);
 						data.EventCallback(event);
 						break;
 					}
@@ -133,7 +133,7 @@ namespace HEngine
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			KeyTypedEvent event(static_cast<KeyCode>(keycode));
+			KeyTypedEvent event(keycode);
 			data.EventCallback(event);
 		});
 		glfwSetScrollCallback(m_Window, [] (GLFWwindow* window, double xOffset, double yOffset)

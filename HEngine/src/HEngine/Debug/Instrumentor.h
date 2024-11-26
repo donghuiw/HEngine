@@ -5,6 +5,10 @@
 #include <fstream>
 #include <string>
 #include <thread>
+#include <mutex>
+#include <sstream>
+
+#include "HEngine/Core/Log.h"
 
 namespace HEngine {
 	struct ProfileResult

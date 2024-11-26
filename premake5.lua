@@ -1,3 +1,5 @@
+include "./vendor/premake/premake_customization/solution_items.lua"
+
 workspace "HEngine"
 	architecture "x86_64"
 	startproject "SandBox"
@@ -8,6 +10,10 @@ workspace "HEngine"
 		"Release",
 		"Dist"
 	}
+	solution_items
+	{
+		".editorconfig"
+	}
 	flags
 	{
 		"MultiProcessorCompile"
@@ -16,181 +22,21 @@ workspace "HEngine"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "HEngine/vendor/GLFW/include"
-IncludeDir["Glad"] = "HEngine/vendor/Glad/include"
-IncludeDir["entt"] = "HEngine/vendor/entt/include"
-IncludeDir["ImGui"] = "HEngine/vendor/imgui"
-IncludeDir["glm"] = "HEngine/vendor/glm"
-IncludeDir["stb_image"] = "HEngine/vendor/stb_image"
+IncludeDir["GLFW"] = "%{wks.location}/HEngine/vendor/GLFW/include"
+IncludeDir["Glad"] = "%{wks.location}/HEngine/vendor/Glad/include"
+IncludeDir["ImGui"] = "%{wks.location}/HEngine/vendor/imgui"
+IncludeDir["glm"] = "%{wks.location}/HEngine/vendor/glm"
+IncludeDir["stb_image"] = "%{wks.location}/HEngine/vendor/stb_image"
+IncludeDir["entt"] = "%{wks.location}/HEngine/vendor/entt/include"
 
 group "Dependencies"
+	include "vendor/premake"
 	include "HEngine/vendor/GLFW"
 	include "HEngine/vendor/Glad"
 	include "HEngine/vendor/imgui"
 
 group ""
 
-project "HEngine"
-	location "HEngine"
-	kind "StaticLib"
-	language "C++"
-	cppdialect "C++17"
-	staticruntime "on"
-
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	pchheader "hepch.h"
-	pchsource "HEngine/src/hepch.cpp"
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/vendor/stb_image/**.h",
-		"%{prj.name}/vendor/stb_image/**.cpp",
-		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
-	}
-	defines
-	{
-		"_CRT_SECURE_NO_WARNINGS",
-		"GLFW_INCLUDE_NONE"
-	}
-	includedirs
-	{
-		"%{prj.name}/src",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}",
-		"%{IncludeDir.stb_image}",
-		"%{prj.name}/vendor/spdlog/include"
-	}
-
-	links 
-	{ 
-		"GLFW",
-		"Glad",
-		"ImGui",
-		"opengl32.lib"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-
-		defines
-		{
-		}
-
-	filter "configurations:Debug"
-		defines "HE_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		defines "HE_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "HE_DIST"
-		runtime "Release"
-		optimize "on"
-
-project "SandBox"
-	location "SandBox"
-	kind "ConsoleApp"
-	language "C++"
-	cppdialect "C++17"
-	staticruntime "on"
-
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	includedirs
-	{
-		"HEngine/vendor/spdlog/include",
-		"HEngine/src",
-		"HEngine/vendor",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
-	}
-
-	links
-	{
-		"HEngine"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-
-	filter "configurations:Debug"
-		defines "HE_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		defines "HE_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "HE_DIST"
-		runtime "Release"
-		optimize "on"
-		
-project "HEngine-Editor"
-	location "HEngine-Editor"
-	kind "ConsoleApp"
-	language "C++"
-	cppdialect "C++17"
-	staticruntime "on"
-
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	includedirs
-	{
-		"HEngine/vendor/spdlog/include",
-		"HEngine/src",
-		"HEngine/vendor",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
-	}
-
-	links
-	{
-		"HEngine"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-
-	filter "configurations:Debug"
-		defines "HE_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		defines "HE_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "HE_DIST"
-		runtime "Release"
-		optimize "on"
+include "HEngine"
+include "Sandbox"
+include "HEngine-Editor"
