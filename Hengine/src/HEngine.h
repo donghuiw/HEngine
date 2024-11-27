@@ -5,6 +5,7 @@
 #include "HEngine/Core/Application.h"
 #include "HEngine/Core/Layer.h"
 #include "HEngine/Core/Log.h"
+#include "HEngine/Core/Assert.h"
 
 #include "HEngine/Core/Timestep.h"
 

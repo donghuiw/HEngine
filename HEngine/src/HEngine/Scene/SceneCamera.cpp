@@ -19,10 +19,10 @@ namespace HEngine
 		m_OrthographicFar = farClip;
 		RecalculateProjection();
 	}
-	void SceneCamera::SetPerspective(float verticalFov, float nearClip, float farClip)
+	void SceneCamera::SetPerspective(float verticalFOV, float nearClip, float farClip)
 	{
 		m_ProjectionType = ProjectionType::Perspective;
-		m_PerspectiveFOV = verticalFov;
+		m_PerspectiveFOV = verticalFOV;
 		m_PerspectiveFar = farClip;
 		m_PerspectiveNear = nearClip;
 		RecalculateProjection();

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "HEngine/Core/Base.h"
-#include "HEngine/Core/Log.h"
 #include "HEngine/Scene/Scene.h"
 #include "HEngine/Scene/Entity.h"
 

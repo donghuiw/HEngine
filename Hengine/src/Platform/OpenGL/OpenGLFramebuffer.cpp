@@ -1,10 +1,10 @@
 #include "hepch.h"
-#include "OpenGLFramebuffer.h"
+#include "Platform/OpenGL/OpenGLFramebuffer.h"
 
 #include <glad/glad.h>
 
 namespace HEngine {
-
+	
 	static const uint32_t s_MaxFramebufferSize = 8192;
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
@@ -64,7 +64,9 @@ namespace HEngine {
 	{
 		if (width == 0 || height == 0 || width > s_MaxFramebufferSize || height > s_MaxFramebufferSize)
 		{
-			HE_CORE_ASSERT("Attempted to resize framebuffer to {0}, {1}", width, height);
+			char buffer[256];
+			snprintf(buffer, sizeof(buffer), "Attempted to resize framebuffer to %d, %d", width, height);
+			HE_CORE_ASSERT(buffer);
 			return;
 		}
 		m_Specification.Width = width;

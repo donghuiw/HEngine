@@ -1,9 +1,11 @@
 #pragma once
 
 #include "HEngine/Core/Base.h"
-
+//This ignores call warnings raised inside External headers
+#pragma warning(push, 0)
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+#pragma warning(pop)
 
 #if FMT_VERSION >= 90000
 #include "HEngine/Events/Event.h"
