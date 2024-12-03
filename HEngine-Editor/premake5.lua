@@ -19,7 +19,8 @@ project "HEngine-Editor"
 		"%{wks.location}/HEngine/src",
 		"%{wks.location}/HEngine/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

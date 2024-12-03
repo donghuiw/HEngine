@@ -21,3 +21,6 @@
 [submodule "HEngine/vendor/yaml-cpp"]
 	path = HEngine/vendor/yaml-cpp
 	url = https://github.com/TheCherno/yaml-cpp
+[submodule "HEngine/vendor/ImGuizmo"]
+	path = HEngine/vendor/ImGuizmo
+	url = https://github.com/thecherno/imguizmo
