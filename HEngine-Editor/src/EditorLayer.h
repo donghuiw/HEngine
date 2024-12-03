@@ -1,6 +1,7 @@
 #pragma once
 
 #include "HEngine.h"
+#include "HEngine/Renderer/EditorCamera.h"
 #include "Panels/SceneHierarchyPanel.h"
 
 namespace HEngine
@@ -35,6 +36,8 @@ namespace HEngine
 		Entity m_SecondCamera;
 
 		bool m_PrimaryCamera = true;
+
+		EditorCamera m_EditorCamera;
 
 		Ref<Texture2D> m_CheckerboardTexture;
 		Ref<Framebuffer> m_Framebuffer;

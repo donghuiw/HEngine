@@ -14,7 +14,6 @@ namespace HEngine
 	public:
 		static bool IsKeyPressed(KeyCode key);
 
-	private:
 		static bool IsMouseButtonPressed(MouseCode button);
 		static glm::vec2 GetMousePosition();
 		static float GetMouseX();

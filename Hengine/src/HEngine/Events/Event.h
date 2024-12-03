@@ -6,6 +6,7 @@
 
 namespace HEngine
 {
+
 	enum class EventType
 	{
 		None = 0,
@@ -31,19 +32,19 @@ namespace HEngine
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class  Event
+	class Event
 	{
-		friend class EventDispatcher;
 	public:
 		virtual ~Event() = default;
 
-		bool	 Handled = false;
+		bool Handled = false;
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category)
+		bool IsInCategory(EventCategory category)
 		{
 			return GetCategoryFlags() & category;
 		}
@@ -56,6 +57,7 @@ namespace HEngine
 			: m_Event(event)
 		{
 		}
+
 		// F will be deduced by the compiler
 		template<typename T, typename F>
 		bool Dispatch(const F& func)
