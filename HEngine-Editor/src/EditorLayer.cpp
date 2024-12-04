@@ -23,10 +23,13 @@ namespace HEngine
 
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
-		FramebufferSpecification fbSpc;
-		fbSpc.Width = 1280;
-		fbSpc.Height = 720;
-		m_Framebuffer = Framebuffer::Create(fbSpc);
+		FramebufferSpecification fbSpec;
+		fbSpec.Width = 1280;
+		fbSpec.Height = 720;
+		fbSpec.Attachments.Attachments.emplace_back(FramebufferTextureFormat::RGBA8 );// 使用 RGBA8 作为颜色附件
+
+		m_Framebuffer = Framebuffer::Create(fbSpec);
+		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 
 		m_ActiveScene = CreateRef<Scene>();
 
@@ -45,7 +48,7 @@ namespace HEngine
 		m_CameraEntity.AddComponent<CameraComponent>();
 
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
-		auto& cc =  m_SecondCamera.AddComponent<CameraComponent>();
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
 		class CameraController : public ScriptableEntity
@@ -105,7 +108,7 @@ namespace HEngine
 		}
 
 		// Update
-		if(m_ViewportFocused)
+		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
 
 		m_EditorCamera.OnUpdate(ts);
@@ -115,7 +118,7 @@ namespace HEngine
 		m_Framebuffer->Bind();
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
-		
+
 		//Update scene
 		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
@@ -217,7 +220,7 @@ namespace HEngine
 
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		
+
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
@@ -267,7 +270,7 @@ namespace HEngine
 			{
 				glm::vec3 translation, rotation, scale;
 				Math::DecomposeTransform(transform, translation, rotation, scale);
-				
+
 				glm::vec3 deltaRotation = rotation - tc.Rotation;
 				tc.Translation = translation;
 				tc.Rotation += deltaRotation;
@@ -279,7 +282,7 @@ namespace HEngine
 		ImGui::PopStyleVar();
 
 		ImGui::End();
-		}
+	}
 
 	void EditorLayer::OnEvent(Event& e)
 	{
@@ -300,41 +303,41 @@ namespace HEngine
 		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
 		switch (e.GetKeyCode())
 		{
-			case Key::N:
-			{
-				if (control)
-					NewScene();
+		case Key::N:
+		{
+			if (control)
+				NewScene();
 
-				break;
-			}
-			case Key::O:
-			{
-				if (control)
-					OpenScene();
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+				OpenScene();
 
-				break;
-			}
-			case Key::S:
-			{
-				if (control && shift)
-					SaveSceneAs();
+			break;
+		}
+		case Key::S:
+		{
+			if (control && shift)
+				SaveSceneAs();
 
-				break;
-			}
+			break;
+		}
 
-			//Gizmos
-			case Key::Q:
-				m_GizmoType = -1;
-				break;
-			case Key::W:
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
-				break;
-			case Key::E:
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
-				break;
-			case Key::R:
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
+		//Gizmos
+		case Key::Q:
+			m_GizmoType = -1;
+			break;
+		case Key::W:
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		case Key::E:
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		case Key::R:
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
 		}
 		return true;
 	}
