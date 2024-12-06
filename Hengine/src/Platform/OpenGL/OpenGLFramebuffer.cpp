@@ -70,12 +70,23 @@ namespace HEngine {
 		{
 			switch (format)
 			{
-			case FramebufferTextureFormat::DEPTH24STENCIL8:  return true;
+				case FramebufferTextureFormat::DEPTH24STENCIL8:  return true;
 			}
 
 			return false;
 		}
 
+		static GLenum HEngineFBTextureFormatToGL(FramebufferTextureFormat format)
+		{
+			switch (format)
+			{
+				case FramebufferTextureFormat::RGBA8:					return GL_RGBA8;
+				case FramebufferTextureFormat::RED_INTEGER:		return GL_RED_INTEGER;
+			}
+
+			HE_CORE_ASSERT(false);
+			return 0;
+		}
 	}
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
@@ -206,6 +217,16 @@ namespace HEngine {
 		m_Specification.Height = height;
 
 		Invalidate();
+	}
+
+	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	{
+		HE_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+
+		auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
+		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,
+			Utils::HEngineFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
+
 	}
 
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
