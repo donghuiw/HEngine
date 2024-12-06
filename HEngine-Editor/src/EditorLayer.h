@@ -4,6 +4,7 @@
 #include "HEngine/Renderer/EditorCamera.h"
 #include "Panels/SceneHierarchyPanel.h"
 
+#include <imgui/imgui.h>
 namespace HEngine
 {
 	class EditorLayer : public Layer
@@ -44,6 +45,8 @@ namespace HEngine
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+		glm::vec2 m_ViewportBounds[2] = { { 0.0f, 0.0f }, { 0.0f, 0.0f } };
+		ImVec2  viewportOffset = { 0.0f, 0.0f };
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
 		int m_GizmoType = -1;
