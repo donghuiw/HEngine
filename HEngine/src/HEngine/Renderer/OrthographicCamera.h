@@ -4,10 +4,10 @@
 
 namespace HEngine
 {
-	class OrthographiCamera
+	class OrthographicCamera
 	{
 	public:
-		OrthographiCamera(float left, float right, float bottom, float top);
+		OrthographicCamera(float left, float right, float bottom, float top);
 
 		const glm::vec3& GetPosition() const { return m_Position;  }
 		void SetProjection(float left, float right, float bottom, float top);

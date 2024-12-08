@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HEngine/Renderer/OrthographiCamera.h"
+#include "HEngine/Renderer/OrthographicCamera.h"
 #include "HEngine/Core/Timestep.h"
 
 #include "HEngine/Events/ApplicationEvent.h"
@@ -17,8 +17,8 @@ namespace HEngine
 		void	OnEvent(Event& e);
 		void OnResize(float width, float height);
 
-		OrthographiCamera& GetCamera(){ return m_Camera; }
-		const OrthographiCamera& GetCamera() const { return m_Camera; }
+		OrthographicCamera& GetCamera(){ return m_Camera; }
+		const OrthographicCamera& GetCamera() const { return m_Camera; }
 
 		float GetZoomLevel() const { return m_ZoomLevel; }
 		void SetZoomLevel(float level) { m_ZoomLevel = level; }
@@ -28,7 +28,7 @@ namespace HEngine
 	private:
 		float m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
-		OrthographiCamera m_Camera;
+		OrthographicCamera m_Camera;
 
 		bool m_Rotation;
 

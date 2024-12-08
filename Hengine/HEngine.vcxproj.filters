@@ -19,6 +19,9 @@
     <Filter Include="src\HEngine\ImGui">
       <UniqueIdentifier>{8427B073-F03D-AE09-39B5-392BA50A7F91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HEngine\Math">
+      <UniqueIdentifier>{F3336CA6-DF2C-8BF8-085F-707DF4B66A04}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\HEngine\Renderer">
       <UniqueIdentifier>{C00F9F6B-AC9E-2835-55BD-3C30412B39DB}</UniqueIdentifier>
     </Filter>
@@ -102,6 +105,9 @@
     <ClInclude Include="src\HEngine\Core\PlatformDetection.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\HEngine\Core\Timer.h">
+      <Filter>src\HEngine\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\HEngine\Core\Timestep.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
@@ -126,10 +132,16 @@
     <ClInclude Include="src\HEngine\ImGui\ImGuiLayer.h">
       <Filter>src\HEngine\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\HEngine\Math\Math.h">
+      <Filter>src\HEngine\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Buffer.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Camera.h">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Renderer\EditorCamera.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Framebuffer.h">
@@ -138,7 +150,7 @@
     <ClInclude Include="src\HEngine\Renderer\GraphicsContext.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Renderer\OrthographiCamera.h">
+    <ClInclude Include="src\HEngine\Renderer\OrthographicCamera.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\OrthographicCameraController.h">
@@ -160,6 +172,9 @@
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Texture.h">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Renderer\UniformBuffer.h">
       <Filter>src\HEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\VertexArray.h">
@@ -202,6 +217,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
@@ -1467,8 +1485,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Math\Math.h" />
-    <ClInclude Include="src\HEngine\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Core\Application.cpp">
@@ -1492,7 +1508,13 @@
     <ClCompile Include="src\HEngine\ImGui\ImGuiLayer.cpp">
       <Filter>src\HEngine\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\HEngine\Math\Math.cpp">
+      <Filter>src\HEngine\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\Buffer.cpp">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Renderer\EditorCamera.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\Framebuffer.cpp">
@@ -1501,7 +1523,7 @@
     <ClCompile Include="src\HEngine\Renderer\GrapgicsContext.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\HEngine\Renderer\OrthographiCamera.cpp">
+    <ClCompile Include="src\HEngine\Renderer\OrthographicCamera.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\OrthographicCameraController.cpp">
@@ -1523,6 +1545,9 @@
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\Texture.cpp">
+      <Filter>src\HEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Renderer\UniformBuffer.cpp">
       <Filter>src\HEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\VertexArray.cpp">
@@ -1558,6 +1583,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1579,7 +1607,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\HEngine\Math\Math.cpp" />
-    <ClCompile Include="src\HEngine\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

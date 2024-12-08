@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HEngine/Renderer/RenderCommand.h"
-#include "HEngine/Renderer/OrthographiCamera.h"
+#include "HEngine/Renderer/OrthographicCamera.h"
 #include "HEngine/Renderer/Shader.h"
 
 namespace HEngine
@@ -11,7 +11,7 @@ namespace HEngine
 	public:
 		static void Init();
 		static void Shutdown();
-		static void BeginScene(OrthographiCamera& camera);
+		static void BeginScene(OrthographicCamera& camera);
 		static void EndScene();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 

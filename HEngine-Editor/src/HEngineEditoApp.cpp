@@ -8,8 +8,8 @@ namespace HEngine
 	class HEngineEditor : public Application
 	{
 	public:
-		HEngineEditor()
-			: Application("HEngine Editor")
+		HEngineEditor(ApplicationCommandLineArgs args)
+			: Application("HEngineEditor", args)
 		{
 			PushLayer(new EditorLayer());
 		}
@@ -17,8 +17,8 @@ namespace HEngine
 		{
 		}
 	};
-	Application* CreateApplication()
+	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new HEngineEditor();
+		return new HEngineEditor(args);
 	}
 }

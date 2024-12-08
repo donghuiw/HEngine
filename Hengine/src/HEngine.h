@@ -32,5 +32,5 @@
 #include "HEngine/Renderer/Framebuffer.h"
 #include "HEngine/Renderer/Texture.h"
 
-#include "HEngine/Renderer/OrthographiCamera.h"
+#include "HEngine/Renderer/OrthographicCamera.h"
 //-------------------------------------------------------

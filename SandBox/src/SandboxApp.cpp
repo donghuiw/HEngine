@@ -7,7 +7,8 @@
 class SandBox : public HEngine::Application
 {
 public:
-	SandBox()
+	SandBox(HEngine::ApplicationCommandLineArgs args)
+		: Application("Sandbox", args)
 	{
 		//PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D);
@@ -16,7 +17,7 @@ public:
 	{
 	}
 };
-HEngine::Application* HEngine::CreateApplication()
+HEngine::Application* HEngine::CreateApplication(ApplicationCommandLineArgs args)
 {
-	return new SandBox();
+	return new SandBox(args);
 }

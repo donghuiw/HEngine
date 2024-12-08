@@ -14,7 +14,7 @@ namespace HEngine
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}
-	void Renderer::BeginScene(OrthographiCamera& camera)
+	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}
