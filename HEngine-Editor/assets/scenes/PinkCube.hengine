@@ -29,10 +29,28 @@ Entities:
       Color: [0.54842025, 0, 0.586872578, 1]
   - Entity: 16816816816888
     TagComponent:
+      Tag: Right2
+    TransformComponent:
+      Translation: [-0.358135492, 0, -0.360135436]
+      Rotation: [0, 0.785398245, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.54842025, 0, 0.586872578, 1]
+  - Entity: 16816816816888
+    TagComponent:
       Tag: Left
     TransformComponent:
       Translation: [-0.354999989, 0, 0.349999994]
       Rotation: [0, -0.785398185, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0.949807167, 1]
+  - Entity: 16816816816888
+    TagComponent:
+      Tag: Left2
+    TransformComponent:
+      Translation: [0.349120885, 0, -0.354120761]
+      Rotation: [0, -0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0.949807167, 1]
