@@ -1,8 +1,10 @@
 #pragma once
 
 #include "HEngine.h"
-#include "HEngine/Renderer/EditorCamera.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
+
+#include "HEngine/Renderer/EditorCamera.h"
 
 namespace HEngine
 {
@@ -53,5 +55,6 @@ namespace HEngine
 		int m_GizmoType = -1;
 		//Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 }
