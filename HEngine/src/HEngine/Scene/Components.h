@@ -1,13 +1,14 @@
 #pragma once
 
-#include "HEngine/Scene/SceneCamera.h"
-#include "ScriptableEntity.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "ScriptableEntity.h"
+#include "HEngine/Scene/SceneCamera.h"
+#include "HEngine/Renderer/Texture.h"
 
 namespace HEngine
 {
@@ -45,6 +46,8 @@ namespace HEngine
 	struct SpriteRendererComponent
 	{
 		glm::vec4 Color{ 1.0f,1.0f,1.0f,1.0f };
+		Ref<Texture2D> Texture;
+		float TilingFactor = 1.0f;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;

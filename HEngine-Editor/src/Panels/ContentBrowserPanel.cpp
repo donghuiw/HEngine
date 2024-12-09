@@ -41,7 +41,7 @@ namespace HEngine
 		for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))//用于迭代文件系统中的目录
 		{
 			const auto& path = directoryEntry.path();
-			auto relativePath = std::filesystem::relative(path, g_AssetPath);
+			auto relativePath = std::filesystem::relative(path, g_AssetPath);//计算 path 相对于 g_AssetPath 的相对路径
 			std::string filenameString = relativePath.filename().string();
 			
 			ImGui::PushID(filenameString.c_str());
