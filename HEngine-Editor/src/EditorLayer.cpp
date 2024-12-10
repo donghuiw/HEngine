@@ -257,8 +257,11 @@ namespace HEngine
 
 		ImGui::End();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-		ImGui::Begin("Viewport");
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });	//设置窗口内边距为 (0, 0)，确保窗口的内容区域与边界紧贴。
+		bool opened = true;
+		ImGui::Begin("Viewport", &opened, ImGuiWindowFlags_MenuBar);	//创建一个名为 "Viewport" 的窗口，附带关闭功能和菜单栏。
+
+		UI_Toolbar();
 
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
@@ -337,12 +340,12 @@ namespace HEngine
 		ImGui::End();
 		ImGui::PopStyleVar();
 
-		UI_Toolbar();
-
 		ImGui::End();
 	}
 	void EditorLayer::UI_Toolbar()
 	{
+		ImGui::BeginMenuBar();	//开启菜单栏区域，用于绘制菜单或控件。
+
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -352,11 +355,11 @@ namespace HEngine
 		const auto& buttonActive = colors[ImGuiCol_ButtonActive];
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
 
-		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+		auto windowSize = ImGui::GetContentRegionAvail();
 
-		float size = ImGui::GetWindowHeight() - 4.0f;
+		float size = 24;
 		Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
-		ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+		ImGui::SetCursorPosX((windowSize.x * 0.5f) - (size * 0.5f));
 		if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0))
 		{
 			if (m_SceneState == SceneState::Edit)
@@ -364,9 +367,11 @@ namespace HEngine
 			else if (m_SceneState == SceneState::Play)
 				OnSceneStop();
 		}
+
 		ImGui::PopStyleVar(2);
 		ImGui::PopStyleColor(3);
-		ImGui::End();
+
+		ImGui::EndMenuBar();
 	}
 
 	void EditorLayer::OnEvent(Event& e)
