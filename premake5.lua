@@ -25,11 +25,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"
 	include "vendor/premake"
-	include "HEngine/vendor/GLFW"
+	include "HEngine/vendor/premake/premake5_GLFW.lua"
 	include "HEngine/vendor/Glad"
-	include "HEngine/vendor/imgui"
-	include "HEngine/vendor/yaml-cpp"
-	include "HEngine/vendor/Box2D"
+	include "HEngine/vendor/premake/premake5_imgui.lua"
+	include "HEngine/vendor/premake/premake5_yaml.lua"
+	include "HEngine/vendor/premake/premake5_Box2D.lua"
 
 group ""
 
