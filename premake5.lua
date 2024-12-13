@@ -3,7 +3,7 @@ include "Dependencies.lua"
 
 workspace "HEngine"
 	architecture "x86_64"
-	startproject "SandBox"
+	startproject "HEngine-Editor"
 
 	configurations
 	{
@@ -29,6 +29,7 @@ group "Dependencies"
 	include "HEngine/vendor/Glad"
 	include "HEngine/vendor/imgui"
 	include "HEngine/vendor/yaml-cpp"
+	include "HEngine/vendor/Box2D"
 
 group ""
 

@@ -25,3 +25,7 @@
 [submodule "HEngine/vendor/ImGuizmo"]
 	path = HEngine/vendor/ImGuizmo
 	url = https://github.com/thecherno/imguizmo
+
+[submodule "HEngine/vendor/Box2D"]
+	path = HEngine/vendor/Box2D
+	url = https://github.com/erincatto/box2d.git

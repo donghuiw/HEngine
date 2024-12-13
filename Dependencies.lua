@@ -1,11 +1,10 @@
 
 -- HEngine Dependencies
 
---VULKAN_SDK = os.getenv("VULKAN_SDK")
-
 IncludeDir = {}
 IncludeDir["stb_image"] = "%{wks.location}/HEngine/vendor/stb_image"
 IncludeDir["yaml_cpp"] = "%{wks.location}/HEngine/vendor/yaml-cpp/include"
+IncludeDir["Box2D"] = "%{wks.location}/HEngine/vendor/Box2D/include"
 IncludeDir["GLFW"] = "%{wks.location}/HEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "%{wks.location}/HEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "%{wks.location}/HEngine/vendor/ImGui"
@@ -15,6 +14,7 @@ IncludeDir["entt"] = "%{wks.location}/HEngine/vendor/entt/include"
 IncludeDir["shaderc"] = "%{wks.location}/HEngine/vendor/VulkanSDK/Include/shaderc"
 IncludeDir["SPIRV_Cross"] = "%{wks.location}/HEngine/vendor/VulkanSDK/Include/spirv_cross"
 IncludeDir["VulkanSDK"] = "%{wks.location}/HEngine/vendor/VulkanSDK/Include"
+
 
 LibraryDir = {}
 

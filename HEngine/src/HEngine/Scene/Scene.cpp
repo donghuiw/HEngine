@@ -4,11 +4,13 @@
 #include "Entity.h"
 #include "Components.h"
 #include "HEngine/Renderer/Renderer2D.h"
+#include "HEngine/Physics/PhysicsManager.h"
 
 #include <glm/glm.hpp>
 
 namespace HEngine
 {
+
 	Scene::Scene()
 	{
 	}
@@ -31,6 +33,23 @@ namespace HEngine
 		m_Registry.destroy(entity);
 	}
 
+
+	void Scene::OnRuntimeStart()
+	{
+		PhysicsManager::Get().CreateWorld();
+
+		auto view = m_Registry.view<Rigidbody2DComponent>();
+		for (auto e : view)
+		{
+			PhysicsManager::Get().AddRigibody(this, e);
+		}
+	}
+
+	void Scene::OnRuntimeStop()
+	{
+		PhysicsManager::Get().DestoryWorld();
+	}
+
 	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 		// Update scripts
@@ -48,6 +67,14 @@ namespace HEngine
 
 					nsc.Instance->OnUpdate(ts);
 				});
+		}
+		//Physics
+		PhysicsManager::Get().FixedUpdate(ts);
+
+		auto view = m_Registry.view<Rigidbody2DComponent>();
+		for (auto e : view)
+		{
+			PhysicsManager::Get().UpdateRigidbody(this, e);
 		}
 
 		//Render 2D
@@ -155,6 +182,16 @@ namespace HEngine
 
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
 	{
 	}
 }

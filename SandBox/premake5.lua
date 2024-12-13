@@ -19,6 +19,7 @@ project "Sandbox"
 		"%{wks.location}/HEngine/src",
 		"%{wks.location}/HEngine/vendor",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.entt}"
 	}
 

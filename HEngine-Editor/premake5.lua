@@ -19,6 +19,7 @@ project "HEngine-Editor"
 		"%{wks.location}/HEngine/src",
 		"%{wks.location}/HEngine/vendor",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.ImGuizmo}"
 	}

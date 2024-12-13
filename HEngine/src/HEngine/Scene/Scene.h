@@ -5,6 +5,8 @@
 
 #include <entt.hpp>
 
+class b2World;
+
 namespace HEngine
 {
 	class Entity;
@@ -17,6 +19,9 @@ namespace HEngine
 
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestoryEntity(Entity entity);
+
+		void OnRuntimeStart();
+		void OnRuntimeStop();
 
 		//TEMP
 		entt::registry& Reg() { return m_Registry; }
