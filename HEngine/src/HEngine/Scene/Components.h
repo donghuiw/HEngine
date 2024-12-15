@@ -1,18 +1,26 @@
 #pragma once
 
+#include "HEngine/Core/UUID.h"
+#include "HEngine/Scene/SceneCamera.h"
+#include "HEngine/Renderer/Texture.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "ScriptableEntity.h"
-#include "HEngine/Scene/SceneCamera.h"
-#include "HEngine/Renderer/Texture.h"
-
 #include <box2d/id.h>
+
 namespace HEngine
 {
+	struct IDComponent
+	{
+		UUID ID;
+		
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 
 	struct TagComponent
 	{
@@ -66,6 +74,9 @@ namespace HEngine
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 	};
+
+	//Forward declaration
+	class ScriptableEntity;
 
 	struct NativeScriptComponent
 	{

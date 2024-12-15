@@ -5,6 +5,7 @@
 #include <box2d/collision.h>
 #include <box2d/math_functions.h>
 
+#include "HEngine/Scene/ScriptableEntity.h"
 #include "HEngine/Scene/Components.h"
 
 namespace HEngine

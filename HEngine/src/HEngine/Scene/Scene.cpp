@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Components.h"
+#include "ScriptableEntity.h"
 #include "HEngine/Renderer/Renderer2D.h"
 #include "HEngine/Physics/PhysicsManager.h"
 
@@ -21,7 +22,13 @@ namespace HEngine
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
+		return CreateEntityWithUUID(UUID(), name);
+	}
+
+	HEngine::Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name /*= std::string()*/)
+	{
 		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
@@ -155,7 +162,12 @@ namespace HEngine
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
-		static_assert(false);
+		//static_assert(false);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
+	{
 	}
 
 	template<>
