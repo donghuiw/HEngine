@@ -34,23 +34,26 @@ namespace HEngine
 	{
 		ImGui::Begin("Scene Hierarchy");
 
-		for (auto entity : m_Context->m_Registry.view<entt::entity>())
+		if (m_Context)
 		{
-			DrawEntityNode({ entity, m_Context.get() });
-		}
-		bool m_isSelectionContext = false;
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			m_SelectionContext = {};
-
-		if (!m_SelectionContext) //When item is not selected
-		{
-			//Right-click on blank space
-			if (ImGui::BeginPopupContextWindow(0, 1))
+			for (auto entity : m_Context->m_Registry.view<entt::entity>())
 			{
-				if (ImGui::MenuItem("Create Empty Entity"))
-					m_Context->CreateEntity("Empty Entity");
+				DrawEntityNode({ entity, m_Context.get() });
+			}
 
-				ImGui::EndPopup();
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
+
+			if (!m_SelectionContext) //When item is not selected
+			{
+				//Right-click on blank space
+				if (ImGui::BeginPopupContextWindow(0, 1))
+				{
+					if (ImGui::MenuItem("Create Empty Entity"))
+						m_Context->CreateEntity("Empty Entity");
+
+					ImGui::EndPopup();
+				}
 			}
 		}
 
