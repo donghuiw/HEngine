@@ -42,8 +42,13 @@ namespace HEngine
 	void PhysicsManager::AddRigibody(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
+
+		if (!entity.HasComponent<Rigidbody2DComponent>()) return;
+
 		auto& transform = entity.GetComponent<TransformComponent>();
 		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+		if (b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 
 		b2BodyDef bodyDef = b2DefaultBodyDef();
 		bodyDef.type = GetBox2DBodyType(rb2d.Type);
@@ -63,10 +68,14 @@ namespace HEngine
 	void PhysicsManager::AttachBoxCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
+
+		if (!entity.HasComponent<BoxCollider2DComponent>() || !entity.HasComponent<Rigidbody2DComponent>()) return;
+
 		auto& transform = entity.GetComponent<TransformComponent>();
 		auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
 		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
+		if (b2Shape_IsValid(bc2d.RuntimeShapeId)) return;
 		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 
 		b2Polygon boxShape = b2MakeBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
@@ -85,10 +94,14 @@ namespace HEngine
 	void PhysicsManager::AttachCircleCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
+
+		if (!entity.HasComponent<CircleCollider2DComponent>() || !entity.HasComponent<Rigidbody2DComponent>()) return;
+
 		auto& transform = entity.GetComponent<TransformComponent>();
 		auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
 		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
+		if (b2Shape_IsValid(cc2d.RuntimeShapeId)) return;
 		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 
 		b2Circle circleShape;
@@ -109,6 +122,9 @@ namespace HEngine
 	void PhysicsManager::DestoryBoxCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
+
+		if (!entity.HasComponent<BoxCollider2DComponent>())return;
+
 		auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
 		if (!b2Shape_IsValid(bc2d.RuntimeShapeId)) return;
 		
@@ -119,6 +135,9 @@ namespace HEngine
 	void PhysicsManager::DestoryCircleCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
+
+		if (!entity.HasComponent<CircleCollider2DComponent>())return;
+
 		auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
 		if (!b2Shape_IsValid(cc2d.RuntimeShapeId)) return;
 
@@ -135,8 +154,12 @@ namespace HEngine
 	void PhysicsManager::UpdateRigidbody(Scene* scnen, entt::entity e)
 	{
 		Entity entity = { e, scnen };
+
+		if (!entity.HasComponent<Rigidbody2DComponent>()) return;
+
 		auto& transform = entity.GetComponent<TransformComponent>();
 		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 		// Retrieve transform from Box2D
 		
 		b2Vec2 position = b2Body_GetPosition(rb2d.RuntimeBodyId);
