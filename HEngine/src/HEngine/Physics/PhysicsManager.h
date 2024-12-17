@@ -16,8 +16,10 @@ namespace HEngine
 		void CreateWorld();
 		void DestoryWorld();
 		void AddRigibody(Scene* scene, entt::entity e);
-		void AttachBoxshape(Scene* scene, entt::entity e);
-		void DestoryBoxshape(Scene* scene, entt::entity e);
+		void AttachBoxCollider(Scene* scene, entt::entity e);
+		void AttachCircleCollider(Scene* scene, entt::entity e);
+		void DestoryBoxCollider(Scene* scene, entt::entity e);
+		void DestoryCircleCollider(Scene* scene, entt::entity e);
 		void FixedUpdate(Timestep ts);
 		void UpdateRigidbody(Scene* scnen, entt::entity e);
 

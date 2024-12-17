@@ -138,4 +138,23 @@ namespace HEngine
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
 	};
+
+	struct CircleCollider2DComponent
+	{
+		glm::vec2 Offset = { 0.0f, 0.0f };
+		float Radius = 0.5f;
+
+		//TODO(Yan): move into physics material in the future mybe
+		float Density = 1.0f;		//ÃÜ¶È
+		float Friction = 0.5f;		//Ä¦²Á
+		float Restitution = 0.0f;		//»Ö¸´
+
+		b2ShapeId RuntimeShapeId = b2_nullShapeId;
+
+		//Storage for runtime
+		void* RuntimeFixture = nullptr;
+
+		CircleCollider2DComponent() = default;
+		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
+	};
 }

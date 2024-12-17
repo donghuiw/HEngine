@@ -1,4 +1,7 @@
-// Basic Cire Shader
+@@ -0,0 +1,76 @@
+//--------------------------
+// Renderer2D Circle Shader
+// --------------------------
 
 #type vertex
 #version 450 core
@@ -32,7 +35,7 @@ void main()
 	Output.Color = a_Color;
 	Output.Thickness = a_Thickness;
 	Output.Fade = a_Fade;
-	
+
 	v_EntityID = a_EntityID;
 
 	gl_Position = u_ViewProjection * vec4(a_WorldPosition, 1.0);
@@ -57,16 +60,16 @@ layout (location = 4) in flat int v_EntityID;
 
 void main()
 {
-	//Calculate distance and fill circle with white
-	float distance = 1.0 - length(Input.LocalPosition);
-	float circle = smoothstep(0.0, Input.Fade, distance);
-	circle *= smoothstep(Input.Thickness + Input.Fade, Input.Thickness, distance);
+    // Calculate distance and fill circle with white
+    float distance = 1.0 - length(Input.LocalPosition);
+    float circle = smoothstep(0.0, Input.Fade, distance);
+    circle *= smoothstep(Input.Thickness + Input.Fade, Input.Thickness, distance);
 
-	if(circle == 0.0f)
+	if (circle == 0.0)
 		discard;
-	
-	//Set ouput color
-	o_Color = Input.Color;
+
+    // Set output color
+    o_Color = Input.Color;
 	o_Color.a *= circle;
 
 	o_EntityID = v_EntityID;

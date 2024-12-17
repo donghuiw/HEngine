@@ -56,10 +56,11 @@ namespace HEngine
 
 		HE_CORE_ASSERT(b2Body_IsValid(rb2d.RuntimeBodyId), "Body id validation failed.");
 
-		AttachBoxshape(scene, e);
+		AttachBoxCollider(scene, e);
+		AttachCircleCollider(scene, e);
 	}
 
-	void PhysicsManager::AttachBoxshape(Scene* scene, entt::entity e)
+	void PhysicsManager::AttachBoxCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
 		auto& transform = entity.GetComponent<TransformComponent>();
@@ -78,10 +79,34 @@ namespace HEngine
 		b2ShapeId shapeID = b2CreatePolygonShape(rb2d.RuntimeBodyId, &shapeDef, &boxShape);
 		bc2d.RuntimeShapeId = shapeID;
 
-		HE_CORE_ASSERT(b2Shape_IsValid(bc2d.RuntimeShapeId), "Shape id validation failed.");
+		HE_CORE_ASSERT(b2Shape_IsValid(bc2d.RuntimeShapeId), "Box Shape id validation failed.");
 	}
 
-	void PhysicsManager::DestoryBoxshape(Scene* scene, entt::entity e)
+	void PhysicsManager::AttachCircleCollider(Scene* scene, entt::entity e)
+	{
+		Entity entity = { e, scene };
+		auto& transform = entity.GetComponent<TransformComponent>();
+		auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
+		auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
+
+		b2Circle circleShape;
+		circleShape.center = { cc2d.Offset.x, cc2d.Offset.y };
+		circleShape.radius = cc2d.Radius;
+
+		b2ShapeDef shapeDef = b2DefaultShapeDef();
+		shapeDef.friction = cc2d.Friction;
+		shapeDef.density = cc2d.Density;
+		shapeDef.restitution = cc2d.Restitution;
+
+		b2ShapeId shapeID = b2CreateCircleShape(rb2d.RuntimeBodyId, &shapeDef, &circleShape);
+		cc2d.RuntimeShapeId = shapeID;
+
+		HE_CORE_ASSERT(b2Shape_IsValid(cc2d.RuntimeShapeId), "Circle Shape id validation failed.");
+	}
+
+	void PhysicsManager::DestoryBoxCollider(Scene* scene, entt::entity e)
 	{
 		Entity entity = { e, scene };
 		auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
@@ -89,6 +114,16 @@ namespace HEngine
 		
 		b2DestroyShape(bc2d.RuntimeShapeId,false);
 		bc2d.RuntimeShapeId = b2_nullShapeId;
+	}
+
+	void PhysicsManager::DestoryCircleCollider(Scene* scene, entt::entity e)
+	{
+		Entity entity = { e, scene };
+		auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
+		if (!b2Shape_IsValid(cc2d.RuntimeShapeId)) return;
+
+		b2DestroyShape(cc2d.RuntimeShapeId, false);
+		cc2d.RuntimeShapeId = b2_nullShapeId;
 	}
 
 	void PhysicsManager::FixedUpdate(Timestep ts)
