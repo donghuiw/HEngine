@@ -22,6 +22,7 @@ namespace HEngine
 		void DestoryCircleCollider(Scene* scene, entt::entity e);
 		void FixedUpdate(Timestep ts);
 		void UpdateRigidbody(Scene* scnen, entt::entity e);
+		bool ValidBody(b2BodyId bodyID);
 
 	public:
 		static PhysicsManager& Get() { return m_instance; }

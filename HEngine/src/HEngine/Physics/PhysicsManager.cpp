@@ -78,14 +78,15 @@ namespace HEngine
 		if (b2Shape_IsValid(bc2d.RuntimeShapeId)) return;
 		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 
-		b2Polygon boxShape = b2MakeBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
+		b2Polygon Polygon = b2MakeOffsetBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y, 
+			{ bc2d.Offset.x, bc2d.Offset.y }, b2MakeRot(glm::radians(transform.Rotation.z)));
 
 		b2ShapeDef shapeDef = b2DefaultShapeDef();
 		shapeDef.friction = bc2d.Friction;
 		shapeDef.density = bc2d.Density;
 		shapeDef.restitution = bc2d.Restitution;
 
-		b2ShapeId shapeID = b2CreatePolygonShape(rb2d.RuntimeBodyId, &shapeDef, &boxShape);
+		b2ShapeId shapeID = b2CreatePolygonShape(rb2d.RuntimeBodyId, &shapeDef, &Polygon);
 		bc2d.RuntimeShapeId = shapeID;
 
 		HE_CORE_ASSERT(b2Shape_IsValid(bc2d.RuntimeShapeId), "Box Shape id validation failed.");
@@ -106,7 +107,7 @@ namespace HEngine
 
 		b2Circle circleShape;
 		circleShape.center = { cc2d.Offset.x, cc2d.Offset.y };
-		circleShape.radius = cc2d.Radius;
+		circleShape.radius = transform.Scale.x *  cc2d.Radius;
 
 		b2ShapeDef shapeDef = b2DefaultShapeDef();
 		shapeDef.friction = cc2d.Friction;
@@ -151,9 +152,9 @@ namespace HEngine
 		b2World_Step(m_WorldId, ts, subStepCount);
 	}
 
-	void PhysicsManager::UpdateRigidbody(Scene* scnen, entt::entity e)
+	void PhysicsManager::UpdateRigidbody(Scene* scene, entt::entity e)
 	{
-		Entity entity = { e, scnen };
+		Entity entity = { e, scene };
 
 		if (!entity.HasComponent<Rigidbody2DComponent>()) return;
 
@@ -162,13 +163,44 @@ namespace HEngine
 		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 		// Retrieve transform from Box2D
 		
-		b2Vec2 position = b2Body_GetPosition(rb2d.RuntimeBodyId);
-		b2Rot rotation = b2Body_GetRotation(rb2d.RuntimeBodyId);
-		float radiansAngle = atan2(rotation.s, rotation.c);
+		b2Body_SetType(rb2d.RuntimeBodyId, GetBox2DBodyType(rb2d.Type));
+		b2Body_SetFixedRotation(rb2d.RuntimeBodyId, rb2d.FixedRotation);
 
-		transform.Translation.x = position.x;
-		transform.Translation.y = position.y;
-		transform.Rotation.z = radiansAngle;
+		if (entity.HasComponent<BoxCollider2DComponent>())
+		{
+			auto bc2d = entity.GetComponent<BoxCollider2DComponent>();
+			if (b2Shape_IsValid(bc2d.RuntimeShapeId))
+			{
+				b2Polygon polygon = b2MakeOffsetBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y,
+					{ bc2d.Offset.x, bc2d.Offset.y }, b2MakeRot(glm::radians(transform.Rotation.z)));
+
+				b2Shape_SetPolygon(bc2d.RuntimeShapeId, &polygon);
+				b2Shape_SetDensity(bc2d.RuntimeShapeId, bc2d.Density,true);
+				b2Shape_SetFriction(bc2d.RuntimeShapeId, bc2d.Friction);
+				b2Shape_SetRestitution(bc2d.RuntimeShapeId, bc2d.Restitution);
+			}
+		}
+
+		if (entity.HasComponent<CircleCollider2DComponent>())
+		{
+			auto cc2d = entity.GetComponent<CircleCollider2DComponent>();
+			if (b2Shape_IsValid(cc2d.RuntimeShapeId))
+			{
+				b2Circle circleShape;
+				circleShape.center = { cc2d.Offset.x, cc2d.Offset.y };
+				circleShape.radius = transform.Scale.x * cc2d.Radius;
+
+				b2Shape_SetCircle(cc2d.RuntimeShapeId, &circleShape);
+				b2Shape_SetDensity(cc2d.RuntimeShapeId, cc2d.Density,true);
+				b2Shape_SetFriction(cc2d.RuntimeShapeId, cc2d.Friction);
+				b2Shape_SetRestitution(cc2d.RuntimeShapeId, cc2d.Restitution);
+			}
+		}
+	}
+
+	bool PhysicsManager::ValidBody(b2BodyId bodyID)
+	{
+		return b2Body_IsValid(bodyID);
 	}
 
 }

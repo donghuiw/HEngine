@@ -8,7 +8,7 @@
 #include "HEngine/Physics/PhysicsManager.h"
 
 #include <glm/glm.hpp>
-
+#include <box2d/box2d.h>
 namespace HEngine
 {
 
@@ -143,6 +143,25 @@ namespace HEngine
 			PhysicsManager::Get().UpdateRigidbody(this, e);
 		}
 
+		for (auto e : view)
+		{
+			Entity entity = { e, this};
+
+			if (!entity.HasComponent<Rigidbody2DComponent>()) continue;
+
+			auto& transform = entity.GetComponent<TransformComponent>();
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+			auto bodyId = rb2d.RuntimeBodyId;
+			if (!PhysicsManager::Get().ValidBody(bodyId)) continue;
+
+			b2Vec2 position = b2Body_GetPosition(bodyId);
+			b2Rot rotation = b2Body_GetRotation(bodyId);
+			float radiansAngle = atan2(rotation.s, rotation.c);
+
+			transform.Translation.x = position.x;
+			transform.Translation.y = position.y;
+			transform.Rotation.z = radiansAngle;
+		}
 		//Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
@@ -215,6 +234,7 @@ namespace HEngine
 				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
 			}
 		}
+
 		Renderer2D::EndScene();
 	}
 

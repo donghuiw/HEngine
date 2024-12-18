@@ -58,7 +58,7 @@ Entities:
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 4.99711323]
+      Translation: [1, -1, 7]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
@@ -76,7 +76,7 @@ Entities:
     TagComponent:
       Tag: Circle
     TransformComponent:
-      Translation: [1.6247555, -1.03230619, 0]
+      Translation: [1.19023013, -1.69354308, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CircleRendererComponent:
