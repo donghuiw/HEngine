@@ -1,6 +1,6 @@
 #pragma once
 
-#include <xhash>
+#include <functional> 
 
 namespace HEngine
 {
@@ -16,17 +16,17 @@ namespace HEngine
 	private:
 		uint64_t m_UUID;
 	};
-
 }
 
 namespace std {
+	template <typename T> struct hash;
 
 	template<>
 	struct hash<HEngine::UUID>
 	{
 		std::size_t operator()(const HEngine::UUID& uuid) const
 		{
-			return hash<uint64_t>()((uint64_t)uuid);
+			return std::hash<uint64_t>()(static_cast<uint64_t>(uuid));
 		}
 	};
 
