@@ -102,18 +102,22 @@ namespace HEngine
 
 	void Scene::OnRuntimeStart()
 	{
-		PhysicsManager::Get().CreateWorld();
-
-		auto view = m_Registry.view<Rigidbody2DComponent>();
-		for (auto e : view)
-		{
-			PhysicsManager::Get().AddRigibody(this, e);
-		}
+		OnPhysics2DStart();
 	}
 
 	void Scene::OnRuntimeStop()
 	{
-		PhysicsManager::Get().DestoryWorld();
+		OnPhysics2DStop();
+	}
+
+	void Scene::OnSimulationStart()
+	{
+		OnPhysics2DStart();
+	}
+
+	void Scene::OnSimulationStop()
+	{
+		OnPhysics2DStop();
 	}
 
 	void Scene::OnUpdateRuntime(Timestep ts)
@@ -209,33 +213,46 @@ namespace HEngine
 		}
 	}
 
+	void Scene::OnUpdateSimulation(Timestep ts, EditorCamera& camera)
+	{
+		//Physics
+		{
+			PhysicsManager::Get().FixedUpdate(ts);
+
+			auto view = m_Registry.view<Rigidbody2DComponent>();
+			for (auto e : view)
+			{
+				PhysicsManager::Get().UpdateRigidbody(this, e);
+			}
+
+			for (auto e : view)
+			{
+				Entity entity = { e, this };
+
+				if (!entity.HasComponent<Rigidbody2DComponent>()) continue;
+
+				auto& transform = entity.GetComponent<TransformComponent>();
+				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+				auto bodyId = rb2d.RuntimeBodyId;
+				if (!PhysicsManager::Get().ValidBody(bodyId)) continue;
+
+				b2Vec2 position = b2Body_GetPosition(bodyId);
+				b2Rot rotation = b2Body_GetRotation(bodyId);
+				float radiansAngle = atan2(rotation.s, rotation.c);
+
+				transform.Translation.x = position.x;
+				transform.Translation.y = position.y;
+				transform.Rotation.z = radiansAngle;
+			}
+		}
+		// Render
+		RenderScene(camera);
+	}
+
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
-		Renderer2D::BeginScene(camera);
-
-		//Draw spritesz
-		{
-			auto group = m_Registry.group < TransformComponent>(entt::get<SpriteRendererComponent>);
-			for (auto entity : group)
-			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-			}
-		}
-
-		//Draw circles
-		{
-			auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
-			for (auto entity : view)
-			{
-				auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
-
-				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
-			}
-		}
-
-		Renderer2D::EndScene();
+		//Render
+		RenderScene(camera);
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -278,6 +295,51 @@ namespace HEngine
 				return Entity{ entity, this };
 		}
 		return {};
+	}
+
+	void Scene::OnPhysics2DStart()
+	{
+		PhysicsManager::Get().CreateWorld();
+
+		auto view = m_Registry.view<Rigidbody2DComponent>();
+		for (auto e : view)
+		{
+			PhysicsManager::Get().AddRigibody(this, e);
+		}
+	}
+
+	void Scene::OnPhysics2DStop()
+	{
+		PhysicsManager::Get().DestoryWorld();
+	}
+
+	void Scene::RenderScene(EditorCamera& camera)
+	{
+		Renderer2D::BeginScene(camera);
+
+		// Draw sprites
+		{
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+			}
+		}
+
+		// Draw circles
+		{
+			auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+			}
+		}
+
+		Renderer2D::EndScene();
 	}
 
 	template<typename T>
