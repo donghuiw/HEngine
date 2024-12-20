@@ -7,8 +7,8 @@
 class SandBox : public HEngine::Application
 {
 public:
-	SandBox(HEngine::ApplicationCommandLineArgs args)
-		: Application("Sandbox", args)
+	SandBox(const HEngine::ApplicationSpecification& specification)
+		: Application(specification)
 	{
 		//PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D);
@@ -19,5 +19,10 @@ public:
 };
 HEngine::Application* HEngine::CreateApplication(ApplicationCommandLineArgs args)
 {
-	return new SandBox(args);
+	ApplicationSpecification spec;
+	spec.Name = "Sandbox";
+	spec.WorkingDirectory = "../HEngine-Editor";
+	spec.CommandLineArgs = args;
+	
+	return new SandBox(spec);
 }
