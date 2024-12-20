@@ -13,9 +13,6 @@ namespace HEngine
 		{
 			PushLayer(new EditorLayer());
 		}
-		~HEngineEditor()
-		{
-		}
 	};
 	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
