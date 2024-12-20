@@ -1,10 +1,10 @@
 #include "hepch.h"
 
-#include <GLFW/glfw3.h>
 #include "HEngine//Core/Application.h"
 #include "HEngine//Core/Log.h"
 #include "HEngine//Core/Input.h"
 #include "HEngine/Renderer/Renderer.h"
+#include "HEngine/Utils/PlatformUtils.h"
 
 namespace HEngine
 {
@@ -75,7 +75,7 @@ namespace HEngine
 		{
 			HE_PROFILE_SCOPE("RunLoop");
 
-			float time = (float)glfwGetTime();
+			float time = Time::GetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
