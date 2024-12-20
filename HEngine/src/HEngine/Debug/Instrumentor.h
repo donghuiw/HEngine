@@ -1,5 +1,7 @@
 #pragma once
 
+#include "HEngine/Core/Log.h"
+
 #include <algorithm>
 #include <chrono>
 #include <fstream>
@@ -7,8 +9,6 @@
 #include <thread>
 #include <mutex>
 #include <sstream>
-
-#include "HEngine/Core/Log.h"
 
 namespace HEngine {
 	struct ProfileResult

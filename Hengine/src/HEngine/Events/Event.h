@@ -1,8 +1,8 @@
 #pragma once
 
-#include <functional>
-
 #include "HEngine/Core/Base.h"
+
+#include <functional>
 
 namespace HEngine
 {

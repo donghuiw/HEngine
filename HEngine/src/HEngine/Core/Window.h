@@ -1,9 +1,9 @@
 #pragma once
 
-#include <sstream>
-
 #include "HEngine/Core/Base.h"
 #include "HEngine/Events/Event.h"
+
+#include <sstream>
 
 namespace HEngine
 {

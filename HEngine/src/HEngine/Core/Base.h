@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
-
 #include "HEngine/Core/PlatformDetection.h"
+
+#include <memory>
 
 #ifdef HE_DEBUG
 #if defined(HE_PLATFORM_WINDOWS)

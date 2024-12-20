@@ -294,6 +294,7 @@ namespace HEngine {
 		}
 		catch (YAML::ParserException e)
 		{
+			HE_CORE_ERROR("Failed to load .hengine file '{0}'\n     {1}", filepath, e.what());
 			return false;
 		}
 

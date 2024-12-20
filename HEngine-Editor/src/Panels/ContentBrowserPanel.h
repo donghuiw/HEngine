@@ -1,8 +1,8 @@
 #pragma once
 
-#include <filesystem>
-
 #include "HEngine/Renderer/Texture.h"
+
+#include <filesystem>
 
 namespace HEngine
 {

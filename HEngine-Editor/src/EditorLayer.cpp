@@ -1,13 +1,13 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
 
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 #include "HEngine/Debug/Instrumentor.h"
 #include "HEngine/Scene/SceneSerializer.h"
 #include "HEngine/Utils/PlatformUtils.h"
 #include "HEngine/Math/Math.h"
+
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <ImGuizmo.h>
 namespace HEngine

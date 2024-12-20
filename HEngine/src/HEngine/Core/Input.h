@@ -1,9 +1,9 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
 #include "HEngine/Core/KeyCodes.h"
 #include "HEngine/Core/MouseCodes.h"
+
+#include <glm/glm.hpp>
 
 #include <utility>
 
