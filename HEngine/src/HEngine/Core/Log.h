@@ -11,7 +11,18 @@
 
 #if FMT_VERSION >= 90000
 #include "HEngine/Events/Event.h"
-template <> struct fmt::formatter<HEngine::Event> : ostream_formatter {};
+template <> 
+struct fmt::formatter<HEngine::Event> : ostream_formatter {};
+
+// 为 glm::vec3 提供 fmt::formatter 特化
+template <>
+struct fmt::formatter<glm::vec3> : fmt::formatter<std::string> {
+	template <typename FormatContext>
+	auto format(const glm::vec3& vec, FormatContext& ctx) {
+		// 格式化为 (x, y, z)
+		return fmt::format_to(ctx.out(), "({:.3f}, {:.3f}, {:.3f})", vec.x, vec.y, vec.z);
+	}
+};
 #endif
 
 namespace HEngine
