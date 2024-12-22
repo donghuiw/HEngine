@@ -33,6 +33,18 @@ group "Dependencies"
 
 group ""
 
-include "HEngine"
-include "Sandbox"
-include "HEngine-Editor"
+group "Core"
+	include "HEngine"
+	include "HEngine-ScriptCore"
+
+group ""
+
+group "Tools"
+	include "HEngine-Editor"
+
+group ""
+
+group "Misc"
+	include "Sandbox"
+
+group ""

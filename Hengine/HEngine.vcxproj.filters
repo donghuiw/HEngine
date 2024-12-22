@@ -31,6 +31,9 @@
     <Filter Include="src\HEngine\Scene">
       <UniqueIdentifier>{771F6074-E335-5E0A-2CAD-E92B98022F92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HEngine\Scripting">
+      <UniqueIdentifier>{5CC4D4BB-C830-90B6-9124-2814FD4FB21E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\HEngine\Utils">
       <UniqueIdentifier>{BAB38D74-26CA-8B0A-6F41-172CDB965C92}</UniqueIdentifier>
     </Filter>
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="src\HEngine\Scene\ScriptableEntity.h">
       <Filter>src\HEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Scripting\ScriptEngine.h">
+      <Filter>src\HEngine\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Utils\PlatformUtils.h">
       <Filter>src\HEngine\Utils</Filter>
@@ -1579,6 +1585,9 @@
     </ClCompile>
     <ClCompile Include="src\HEngine\Scene\SceneSerializer.cpp">
       <Filter>src\HEngine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Scripting\ScriptEngine.cpp">
+      <Filter>src\HEngine\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>

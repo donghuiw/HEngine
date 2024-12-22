@@ -40,6 +40,7 @@ project "HEngine"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.mono}",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
@@ -53,8 +54,10 @@ project "HEngine"
 		"Glad",
 		"ImGui",
 		"opengl32.lib",
+		"%{Library.mono}",
 		"yaml-cpp"
 	}
+
 	filter "files:vendor/ImGuizmo/**.cpp"
 	flags { "NoPCH" }
 
@@ -63,6 +66,14 @@ project "HEngine"
 
 		defines
 		{
+		}
+
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.BCrypt}",
 		}
 
 	filter "configurations:Debug"

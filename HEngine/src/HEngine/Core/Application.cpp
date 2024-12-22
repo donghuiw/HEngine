@@ -4,6 +4,7 @@
 #include "HEngine//Core/Log.h"
 #include "HEngine//Core/Input.h"
 #include "HEngine/Renderer/Renderer.h"
+#include "HEngine/Scripting/ScriptEngine.h"
 #include "HEngine/Utils/PlatformUtils.h"
 
 namespace HEngine
@@ -26,6 +27,7 @@ namespace HEngine
 		m_Window->SetEventCallback(HE_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		ScriptEngine::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -34,6 +36,7 @@ namespace HEngine
 	{
 		HE_PROFILE_FUNCTION();
 
+		ScriptEngine::Shutdown();
 		Renderer::Shutdown();
 	}
 	void Application::PushLayer(Layer* layer)
