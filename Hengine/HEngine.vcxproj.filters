@@ -213,6 +213,9 @@
     <ClInclude Include="src\HEngine\Scripting\ScriptEngine.h">
       <Filter>src\HEngine\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="src\HEngine\Scripting\ScriptGlue.h">
+      <Filter>src\HEngine\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\HEngine\Utils\PlatformUtils.h">
       <Filter>src\HEngine\Utils</Filter>
     </ClInclude>
@@ -1500,7 +1503,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Scripting\ScriptGlue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Core\Application.cpp">
@@ -1590,6 +1592,9 @@
     <ClCompile Include="src\HEngine\Scripting\ScriptEngine.cpp">
       <Filter>src\HEngine\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="src\HEngine\Scripting\ScriptGlue.cpp">
+      <Filter>src\HEngine\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1632,6 +1637,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\HEngine\Scripting\ScriptGlue.cpp" />
   </ItemGroup>
 </Project>

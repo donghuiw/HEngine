@@ -1,7 +1,7 @@
 project "HEngine-ScriptCore"
 	kind "SharedLib"
 	language "C#"
-	dotnetframework "4.7.2"
+	dotnetframework "4.8"
 
 	targetdir ("%{wks.location}/HEngine-Editor/Resources/Scripts")
 	objdir ("%{wks.location}/HEngine-Editor/Resources/Scripts/Intermediates")

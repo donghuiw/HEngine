@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Components.h"
 #include "ScriptableEntity.h"
+#include "HEngine/Scripting/ScriptEngine.h"
 #include "HEngine/Renderer/Renderer2D.h"
 #include "HEngine/Physics/PhysicsManager.h"
 
@@ -93,30 +94,47 @@ namespace HEngine
 		return CreateEntityWithUUID(UUID(), name);
 	}
 
-	HEngine::Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name /*= std::string()*/)
+	HEngine::Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
 	{
 		Entity entity = { m_Registry.create(), this };
 		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
+
+		m_EntityMap[uuid] = entity;
 		return entity;
 	}
 
 	void Scene::DestoryEntity(Entity entity)
 	{
 		m_Registry.destroy(entity);
+		m_EntityMap.erase(entity.GetUUID());
 	}
-
 
 	void Scene::OnRuntimeStart()
 	{
 		OnPhysics2DStart();
+
+		//Scripting
+		{
+			ScriptEngine::OnRuntimeStart(this);
+			//Instantiate all script entities
+
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto e : view)
+			{
+				Entity entity = { e, this };
+				ScriptEngine::OnCreateEntity(entity);
+			}
+		}
 	}
 
 	void Scene::OnRuntimeStop()
 	{
 		OnPhysics2DStop();
+
+		ScriptEngine::OnRuntimeStop();
 	}
 
 	void Scene::OnSimulationStart()
@@ -133,6 +151,14 @@ namespace HEngine
 	{
 		// Update scripts
 		{
+			//C# Entity OnUpdate
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto e : view)
+			{
+				Entity entity = { e, this };
+				ScriptEngine::OnUpdateEntity(entity, ts);
+			}
+
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
 				{
 					//TODO: Move to Scene::OnScenePlay
@@ -285,6 +311,15 @@ namespace HEngine
 		CopyComponentIfExists(AllComponents{}, newEntity, entity);
 	}
 
+	Entity Scene::GetEntityByUUID(UUID uuid)
+	{
+		// 使用断言，如果没有找到 Entity，可以立即在调试模式下中断
+		HE_CORE_ASSERT(m_EntityMap.find(uuid) != m_EntityMap.end(), "Entity not found!");
+
+		// 如果找到了，则返回 Entity
+		return { m_EntityMap.at(uuid), this };
+	}
+
 	Entity Scene::GetPrimaryCameraEntity()
 	{
 		auto view = m_Registry.view<CameraComponent>();
@@ -373,6 +408,11 @@ namespace HEngine
 	{
 		if (m_ViewportWidth > 0 && m_ViewportHeight > 0)
 			component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<ScriptComponent>(Entity entity, ScriptComponent& component)
+	{
 	}
 
 	template<>
