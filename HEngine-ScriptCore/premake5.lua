@@ -3,8 +3,8 @@ project "HEngine-ScriptCore"
 	language "C#"
 	dotnetframework "4.8"
 
-	targetdir ("%{wks.location}/HEngine-Editor/Resources/Scripts")
-	objdir ("%{wks.location}/HEngine-Editor/Resources/Scripts/Intermediates")
+	targetdir ("../HEngine-Editor/Resources/Scripts")
+	objdir ("../HEngine-Editor/Resources/Scripts/Intermediates")
 
 	files 
 	{
