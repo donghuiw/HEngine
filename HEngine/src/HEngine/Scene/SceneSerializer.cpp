@@ -363,7 +363,7 @@ namespace HEngine {
 					cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
 				}
 
-				auto scriptComponent = entity["SriptComponent"];
+				auto scriptComponent = entity["ScriptComponent"];
 				if (scriptComponent)
 				{
 					auto& sc = deserializedEntity.AddComponent<ScriptComponent>();
