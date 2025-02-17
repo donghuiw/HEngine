@@ -21,13 +21,15 @@ Entities:
       Restitution: 0
   - Entity: 15045535320033348975
     TagComponent:
-      Tag: Sprite
+      Tag: Player
     TransformComponent:
       Translation: [0.0495706201, 0.271503896, 0.0225147791]
       Rotation: [0, 0, -0.235084534]
       Scale: [0.361159712, 0.375572056, 0.848135769]
     ScriptComponent:
       ClassName: Sandbox.Player
+      ScriptFields:
+        []
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
       TilingFactor: 1
@@ -77,6 +79,10 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+    ScriptComponent:
+      ClassName: Sandbox.Camera
+      ScriptFields:
+        []
   - Entity: 8804479042241551551
     TagComponent:
       Tag: Circle

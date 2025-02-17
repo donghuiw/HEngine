@@ -233,7 +233,7 @@ namespace HEngine {
 			out << YAML::Key << "ClassName" << YAML::Value << scriptComponent.ClassName;
 
 			//Fields
-			Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClasses(scriptComponent.ClassName);
+			Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(scriptComponent.ClassName);
 			const auto& fields = entityClass->GetFields();
 			if (fields.size() > 0)
 			{
@@ -450,7 +450,7 @@ namespace HEngine {
 					auto scriptFields = scriptComponent["ScriptFields"];
 					if (scriptFields)
 					{
-						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClasses(sc.ClassName);
+						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(sc.ClassName);
 						HE_CORE_ASSERT(entityClass);
 						const auto& fields = entityClass->GetFields();
 						auto& entityFields = ScriptEngine::GetScriptFieldMap(deserializedEntity);

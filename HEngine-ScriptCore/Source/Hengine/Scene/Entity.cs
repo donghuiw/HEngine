@@ -51,7 +51,7 @@ namespace HEngine
             return new Entity(entityID);
         }
 
-        public T AS<T>() where T : Entity, new()
+        public T As<T>() where T : Entity, new()
         {
             object instance = InternalCalls.GetScriptInstance(ID);
             return instance as T;

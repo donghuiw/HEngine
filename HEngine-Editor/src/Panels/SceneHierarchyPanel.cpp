@@ -354,41 +354,41 @@ namespace HEngine
 						}
 					}
 				}
-				else
+			}
+			else
+			{
+				if (scriptClassExists)
 				{
-					if (scriptClassExists)
+					Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(component.ClassName);
+					const auto& fields = entityClass->GetFields();
+
+					auto& entityFields = ScriptEngine::GetScriptFieldMap(entity);
+					for (const auto& [name, field] : fields)
 					{
-						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClasses(component.ClassName);
-						const auto& fields = entityClass->GetFields();
-
-						auto& entityFields = ScriptEngine::GetScriptFieldMap(entity);
-						for (const auto& [name, field] : fields)
+						// Field has been set in editor
+						if (entityFields.find(name) != entityFields.end())
 						{
-							//Field has been set in editor
-							if (entityFields.find(name) != entityFields.end())
-							{
-								ScriptFieldInstance& scriptField = entityFields.at(name);
+							ScriptFieldInstance& scriptField = entityFields.at(name);
 
-								//Display control to set it maybe
-								if (field.Type == ScriptFieldType::Float)
-								{
-									float data = scriptField.GetValue<float>();
-									if (ImGui::DragFloat(name.c_str(), &data))
-										scriptField.SetValue(data);
-								}
-							}
-							else
+							// Display control to set it maybe
+							if (field.Type == ScriptFieldType::Float)
 							{
-								// Display control to set it maybe
-								if (field.Type == ScriptFieldType::Float)
+								float data = scriptField.GetValue<float>();
+								if (ImGui::DragFloat(name.c_str(), &data))
+									scriptField.SetValue(data);
+							}
+						}
+						else
+						{
+							// Display control to set it maybe
+							if (field.Type == ScriptFieldType::Float)
+							{
+								float data = 0.0f;
+								if (ImGui::DragFloat(name.c_str(), &data))
 								{
-									float data = 0.0f;
-									if (ImGui::DragFloat(name.c_str(), &data))
-									{
-										ScriptFieldInstance& fieldInstance = entityFields[name];
-										fieldInstance.Field = field;
-										fieldInstance.SetValue(data);
-									}
+									ScriptFieldInstance& fieldInstance = entityFields[name];
+									fieldInstance.Field = field;
+									fieldInstance.SetValue(data);
 								}
 							}
 						}

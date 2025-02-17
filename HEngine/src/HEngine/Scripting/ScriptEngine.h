@@ -158,7 +158,7 @@ namespace HEngine
 		static Scene* GetSceneContext();
 		static Ref<ScriptInstance> GetEntityScriptInstance(UUID entityID);
 
-		static Ref <ScriptClass> GetEntityClasses(const std::string& name);
+		static Ref <ScriptClass> GetEntityClass(const std::string& name);
 		static std::unordered_map<std::string, Ref<ScriptClass>> GetEntityClasses();
 		static ScriptFieldMap& GetScriptFieldMap(Entity entity);
 

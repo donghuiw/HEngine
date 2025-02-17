@@ -301,7 +301,7 @@ namespace HEngine {
 		return it->second;
 	}
 
-	Ref<ScriptClass> ScriptEngine::GetEntityClasses(const std::string& name)
+	Ref<ScriptClass> ScriptEngine::GetEntityClass(const std::string& name)
 	{
 		if (s_Data->EntityClasses.find(name) == s_Data->EntityClasses.end())
 			return nullptr;
