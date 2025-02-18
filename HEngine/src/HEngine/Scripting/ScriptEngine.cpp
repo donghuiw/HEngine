@@ -7,6 +7,11 @@
 #include "mono/metadata/object.h"
 #include "mono/metadata/metadata.h"
 
+#include "FileWatch.h"
+
+#include "HEngine/Core/Application.h"
+#include "HEngine/Core/Timer.h"
+
 #define MONO_FIELD_ATTR_PUBLIC 0x0006
 
 namespace HEngine {
@@ -140,11 +145,28 @@ namespace HEngine {
 		std::unordered_map<UUID, Ref<ScriptInstance>> EntityInstances;
 		std::unordered_map<UUID, ScriptFieldMap> EntityScriptFields;
 
+		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;	//用于监视指定的文件或目录的变化
+		bool AssemblyReloadPending = false;
+
 		//Runtime
 		Scene* SceneContext = nullptr;
 	};
 
 	static ScriptEngineData* s_Data = nullptr;
+
+	static void OnAppAssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type)
+	{
+		if (!s_Data->AssemblyReloadPending && change_type == filewatch::Event::modified)	//仅在文件被修改时触发
+		{
+			s_Data->AssemblyReloadPending = true;
+
+			Application::Get().SubmitToMainThread([]()	//将重载程序集的操作提交到主线程执行。任何与 UI 或主线程相关的操作都应该在主线程中执行。
+			{
+					s_Data->AppAssemblyFileWatcher.reset();		//文件重载后清理资源
+					ScriptEngine::ReloadAssembly();		//重新加载程序集
+			});
+		}
+	}
 
 	void ScriptEngine::Init()
 	{
@@ -259,6 +281,9 @@ namespace HEngine {
 		auto assemb = s_Data->AppAssembly;
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
 		auto assembi = s_Data->AppAssemblyImage;
+
+		s_Data->AppAssemblyFileWatcher = CreateScope<filewatch::FileWatch<std::string>>(filepath.string(), OnAppAssemblyFileSystemEvent);
+		s_Data->AssemblyReloadPending = false;
 	}
 
 	void ScriptEngine::OnRuntimeStart(Scene* scene)

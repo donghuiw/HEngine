@@ -13,7 +13,7 @@ namespace Sandbox
         private TransformComponent m_Transform;
         private Rigidbody2DComponent m_Rigidbody;
 
-        public float Speed;
+        public float Speed = 0.0f;
         public float Time = 0.0f;
 
         void OnCreate()

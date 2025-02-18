@@ -18,9 +18,10 @@ project "HEngine-Editor"
 		"%{wks.location}/HEngine/vendor/spdlog/include",
 		"%{wks.location}/HEngine/src",
 		"%{wks.location}/HEngine/vendor",
-		"%{IncludeDir.glm}",
 		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.filewatch}",
+		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGuizmo}"
 	}
 

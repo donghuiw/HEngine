@@ -59,6 +59,12 @@ namespace HEngine
 		m_Running = false;
 	}
 
+	void Application::SubmitToMainThread(const std::function<void()>& function)
+	{
+		std::scoped_lock<std::mutex> lock(m_MainThreadQueueMutex);	//保证队列 m_MainThreadQueue 在访问时的线程安全
+
+		m_MainThreadQueue.emplace_back(function);	//用来存储将要在主线程执行的任务
+	}
 	void Application::OnEvent(Event& e)
 	{
 		HE_PROFILE_FUNCTION();
@@ -85,6 +91,8 @@ namespace HEngine
 			float time = Time::GetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+
+			ExecuteMainThreadQueue();
 
 			if (!m_Minimized)
 			{
@@ -128,4 +136,13 @@ namespace HEngine
 		return false;
 	}
 
+	void Application::ExecuteMainThreadQueue()
+	{
+		std::scoped_lock<std::mutex> lock(m_MainThreadQueueMutex);
+
+		for (auto& func : m_MainThreadQueue)
+			func();
+
+		m_MainThreadQueue.clear();
+	}
 }
