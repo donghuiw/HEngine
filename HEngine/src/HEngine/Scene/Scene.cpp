@@ -153,6 +153,7 @@ namespace HEngine
 
 	void Scene::OnUpdateRuntime(Timestep ts)
 	{
+		if (!m_IsPaused || m_StepFrames-- > 0)		//-- > 先判断是否大于0再减减
 		// Update scripts
 		{
 			//C# Entity OnUpdate
@@ -177,6 +178,7 @@ namespace HEngine
 					nsc.Instance->OnUpdate(ts);
 				});
 		}
+
 		//Physics
 		PhysicsManager::Get().FixedUpdate(ts);
 
@@ -205,6 +207,7 @@ namespace HEngine
 			transform.Translation.y = position.y;
 			transform.Rotation.z = radiansAngle;
 		}
+
 		//Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
@@ -222,6 +225,7 @@ namespace HEngine
 				}
 			}
 		}
+
 		if(mainCamera)
 		{
 			Renderer2D::BeginScene(*mainCamera, cameraTransform);
@@ -330,13 +334,16 @@ namespace HEngine
 		return {};
 	}
 
+	void Scene::Step(int frames)
+	{
+		m_StepFrames = frames;
+	}
+
 	Entity Scene::GetEntityByUUID(UUID uuid)
 	{
-		// 使用断言，如果没有找到 Entity，可以立即在调试模式下中断
 		HE_CORE_ASSERT(m_EntityMap.find(uuid) != m_EntityMap.end(), "Entity not found!");
 
-		// 如果找到了，则返回 Entity
-		return { m_EntityMap.at(uuid), this };
+		return { m_EntityMap.at(uuid), this };	//返回通过UUID查找到的Entity
 	}
 
 	Entity Scene::GetPrimaryCameraEntity()
