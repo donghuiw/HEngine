@@ -6,6 +6,8 @@
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
 #include "mono/metadata/metadata.h"
+#include "mono/metadata/mono-debug.h"
+#include "mono/metadata/threads.h"
 
 #include "FileWatch.h"
 
@@ -67,7 +69,7 @@ namespace HEngine {
 			return buffer;
 		}
 
-		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath)
+		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false)
 		{
 			uint32_t fileSize = 0;
 			char* fileData = ReadBytes(assemblyPath, &fileSize);
@@ -81,6 +83,21 @@ namespace HEngine {
 				const char* errorMessage = mono_image_strerror(status);
 				// Log some error message using the errorMessage data
 				return nullptr;
+			}
+
+			if (loadPDB)
+			{
+				std::filesystem::path pdbPath = assemblyPath;
+				pdbPath.replace_extension(".pdb");		//将路径 pdbPath 的扩展名替换为.pdb
+
+				if (std::filesystem::exists(pdbPath))
+				{
+					uint32_t pdbFileSize = 0;
+					char* pdbFileData = ReadBytes(pdbPath, &pdbFileSize);
+					mono_debug_open_image_from_memory(image, (const mono_byte*)pdbFileData, pdbFileSize);		// 传入内存中的 PDB 文件数据
+					HE_CORE_INFO("Loaded PDB {}", pdbPath.string());
+					delete[] pdbFileData;
+				}
 			}
 
 			std::string pathString = assemblyPath.string();
@@ -147,6 +164,8 @@ namespace HEngine {
 
 		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;	//用于监视指定的文件或目录的变化
 		bool AssemblyReloadPending = false;
+
+		bool EnableDebugging = true;
 
 		//Runtime
 		Scene* SceneContext = nullptr;
@@ -223,13 +242,29 @@ namespace HEngine {
 
 	void ScriptEngine::InitMono()
 	{
-		mono_set_assemblies_path("mono/lib");
+		mono_set_assemblies_path("mono/lib");		//设置Mono运行时的程序集路径
 
-		MonoDomain* rootDomain = mono_jit_init("HEngineJITRuntime");
+		if (s_Data->EnableDebugging)
+		{
+			const char* argv[2] = {
+				"--debugger-agent=transport=dt_socket,address=127.0.0.1:2550,server=y,suspend=n,loglevel=3,logfile=MonoDebugger.log",
+				"--soft-breakpoints"
+			};
+
+			mono_jit_parse_options(2, (char**)argv);		//传递调试参数导入,详细参数参考Mono文档
+			mono_debug_init(MONO_DEBUG_FORMAT_MONO);			//初始化 Mono 调试器，并指定调试格式
+		}
+
+		MonoDomain* rootDomain = mono_jit_init("HEngineJITRuntime");	//初始化一个新的 Mono 域
 		HE_CORE_ASSERT(rootDomain);
 
 		// Store the root domain pointer
 		s_Data->RootDomain = rootDomain;
+
+		if (s_Data->EnableDebugging)
+			mono_debug_domain_create(s_Data->RootDomain);		//启动调试器，能够调试运行时的执行过程
+
+		mono_thread_set_main(mono_thread_current());		//设置当前线程为 Mono 的主线程
 	}
 
 	void ScriptEngine::ShutdownMono()
@@ -253,7 +288,7 @@ namespace HEngine {
 
 		// Move this maybe
 		s_Data->CoreAssemblyFilepath = filepath;
-		s_Data->CoreAssembly = Utils::LoadMonoAssembly(filepath);
+		s_Data->CoreAssembly = Utils::LoadMonoAssembly(filepath, s_Data->EnableDebugging);
 		s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
 		// Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
 	}
@@ -277,7 +312,7 @@ namespace HEngine {
 	{
 		//Move this maybe
 		s_Data->AppAssemblyFilepath = filepath;
-		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath);
+		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath, s_Data->EnableDebugging);
 		auto assemb = s_Data->AppAssembly;
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
 		auto assembi = s_Data->AppAssemblyImage;
@@ -497,7 +532,8 @@ namespace HEngine {
 
 	MonoObject* ScriptClass::InvokeMethod(MonoObject* instance, MonoMethod* method, void** params)
 	{
-		return mono_runtime_invoke(method, instance, params, nullptr);
+		MonoObject* exception = nullptr;
+		return mono_runtime_invoke(method, instance, params, &exception);
 	}
 
 	bool ScriptInstance::GetFieldValueInternal(const std::string& name, void* buffer)
