@@ -25,6 +25,9 @@
     <Filter Include="src\HEngine\Physics">
       <UniqueIdentifier>{4CB40D33-B815-EB40-4183-31F3ADE32100}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HEngine\Project">
+      <UniqueIdentifier>{2055A749-8CB6-8457-1524-CB098184BB16}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\HEngine\Renderer">
       <UniqueIdentifier>{C00F9F6B-AC9E-2835-55BD-3C30412B39DB}</UniqueIdentifier>
     </Filter>
@@ -87,7 +90,13 @@
     <ClInclude Include="src\HEngine\Core\Base.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\HEngine\Core\Buffer.h">
+      <Filter>src\HEngine\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\HEngine\Core\EntryPoint.h">
+      <Filter>src\HEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Core\FileSystem.h">
       <Filter>src\HEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Core\Input.h">
@@ -146,6 +155,12 @@
     </ClInclude>
     <ClInclude Include="src\HEngine\Physics\PhysicsManager.h">
       <Filter>src\HEngine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Project\Project.h">
+      <Filter>src\HEngine\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\Project\ProjectSerializer.h">
+      <Filter>src\HEngine\Project</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Renderer\Buffer.h">
       <Filter>src\HEngine\Renderer</Filter>
@@ -1503,11 +1518,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\HEngine\Core\Buffer.h" />
-    <ClInclude Include="src\HEngine\Core\FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Core\Application.cpp">
+      <Filter>src\HEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Core\FileSystem.cpp">
       <Filter>src\HEngine\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Core\Layer.cpp">
@@ -1536,6 +1552,12 @@
     </ClCompile>
     <ClCompile Include="src\HEngine\Physics\PhysicsManager.cpp">
       <Filter>src\HEngine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Project\Project.cpp">
+      <Filter>src\HEngine\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HEngine\Project\ProjectSerializer.cpp">
+      <Filter>src\HEngine\Project</Filter>
     </ClCompile>
     <ClCompile Include="src\HEngine\Renderer\Buffer.cpp">
       <Filter>src\HEngine\Renderer</Filter>
@@ -1639,6 +1661,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\HEngine\Core\FileSystem.cpp" />
   </ItemGroup>
 </Project>

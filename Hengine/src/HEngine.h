@@ -19,6 +19,8 @@
 #include "HEngine/Scene/Entity.h"
 #include "HEngine/Scene/ScriptableEntity.h"
 #include "HEngine/Scene/Components.h"
+
+#include "HEngine/Project/Project.h"
 //-------------------------------------------------------
 
 //------- Renderer-------------------------------------

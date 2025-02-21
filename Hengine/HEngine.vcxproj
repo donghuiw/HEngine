@@ -173,6 +173,8 @@
     <ClInclude Include="src\HEngine\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\HEngine\Math\Math.h" />
     <ClInclude Include="src\HEngine\Physics\PhysicsManager.h" />
+    <ClInclude Include="src\HEngine\Project\Project.h" />
+    <ClInclude Include="src\HEngine\Project\ProjectSerializer.h" />
     <ClInclude Include="src\HEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\HEngine\Renderer\Camera.h" />
     <ClInclude Include="src\HEngine\Renderer\EditorCamera.h" />
@@ -638,6 +640,8 @@
     <ClCompile Include="src\HEngine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\HEngine\Math\Math.cpp" />
     <ClCompile Include="src\HEngine\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="src\HEngine\Project\Project.cpp" />
+    <ClCompile Include="src\HEngine\Project\ProjectSerializer.cpp" />
     <ClCompile Include="src\HEngine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\HEngine\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\HEngine\Renderer\Framebuffer.cpp" />
