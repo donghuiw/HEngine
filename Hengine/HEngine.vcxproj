@@ -151,7 +151,9 @@
     <ClInclude Include="src\HEngine\Core\Application.h" />
     <ClInclude Include="src\HEngine\Core\Assert.h" />
     <ClInclude Include="src\HEngine\Core\Base.h" />
+    <ClInclude Include="src\HEngine\Core\Buffer.h" />
     <ClInclude Include="src\HEngine\Core\EntryPoint.h" />
+    <ClInclude Include="src\HEngine\Core\FileSystem.h" />
     <ClInclude Include="src\HEngine\Core\Input.h" />
     <ClInclude Include="src\HEngine\Core\KeyCodes.h" />
     <ClInclude Include="src\HEngine\Core\Layer.h" />
@@ -626,6 +628,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HEngine\Core\Application.cpp" />
+    <ClCompile Include="src\HEngine\Core\FileSystem.cpp" />
     <ClCompile Include="src\HEngine\Core\Layer.cpp" />
     <ClCompile Include="src\HEngine\Core\LayerStack.cpp" />
     <ClCompile Include="src\HEngine\Core\Log.cpp" />
