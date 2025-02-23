@@ -30,7 +30,7 @@ namespace HEngine
 
 	struct ScriptField
 	{
-		ScriptFieldType Type;
+		ScriptFieldType Type = ScriptFieldType::None;
 		std::string Name;
 
 		MonoClassField* ClassField{};

@@ -41,9 +41,7 @@ namespace HEngine {
 		{ "HEngine.Entity",		ScriptFieldType::Entity },
 	};
 	namespace Utils {
-
 		
-
 		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false)
 		{
 			ScopedBuffer fileData = FileSystem::ReadFileBinary(assemblyPath);
@@ -134,7 +132,11 @@ namespace HEngine {
 		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;	//用于监视指定的文件或目录的变化
 		bool AssemblyReloadPending = false;
 
+#ifdef HE_DEBUF
 		bool EnableDebugging = true;
+#else
+		bool EnableDebugging = false;
+#endif
 
 		//Runtime
 		Scene* SceneContext = nullptr;

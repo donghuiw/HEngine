@@ -57,12 +57,14 @@ namespace HEngine {
 
 		void EndSession()
 		{
-			std::lock_guard lock(m_Mutex);
+			std::lock_guard  lock(m_Mutex);
 			InternalEndSession();
 		}
 
 		void WriteProfile(const ProfileResult& result)
 		{
+			std::lock_guard<std::mutex> lock(m_Mutex); // 作用域扩展到整个函数
+
 			std::stringstream json;
 
 			json << ",{";
@@ -75,7 +77,6 @@ namespace HEngine {
 			json << "\"ts\":" << result.Start;
 			json << "}";
 
-			std::lock_guard lock(m_Mutex);
 			if (m_CurrentSession) {
 				m_OutputStream << json.str();
 				m_OutputStream.flush();

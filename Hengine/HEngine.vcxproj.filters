@@ -37,6 +37,9 @@
     <Filter Include="src\HEngine\Scripting">
       <UniqueIdentifier>{5CC4D4BB-C830-90B6-9124-2814FD4FB21E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\HEngine\UI">
+      <UniqueIdentifier>{C7131C6F-B3E1-0F75-9C75-809B88E2EBD9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\HEngine\Utils">
       <UniqueIdentifier>{BAB38D74-26CA-8B0A-6F41-172CDB965C92}</UniqueIdentifier>
     </Filter>
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="src\HEngine\Scripting\ScriptGlue.h">
       <Filter>src\HEngine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HEngine\UI\UI.h">
+      <Filter>src\HEngine\UI</Filter>
     </ClInclude>
     <ClInclude Include="src\HEngine\Utils\PlatformUtils.h">
       <Filter>src\HEngine\Utils</Filter>
