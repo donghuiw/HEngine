@@ -1,28 +1,12 @@
 #include "hepch.h"
 #include "PhysicsManager.h"
 
-#include <box2d/box2d.h>
-#include <box2d/collision.h>
-#include <box2d/math_functions.h>
-
 #include "HEngine/Scene/ScriptableEntity.h"
 #include "HEngine/Scene/Components.h"
 
 namespace HEngine
 {
 	PhysicsManager PhysicsManager::m_instance;
-
-	static b2BodyType GetBox2DBodyType(Rigidbody2DComponent::BodyType bodyType)
-	{
-		switch (bodyType)
-		{
-			case HEngine::Rigidbody2DComponent::BodyType::Static:				return b2_staticBody;
-			case HEngine::Rigidbody2DComponent::BodyType::Dynamic:		return b2_dynamicBody;
-			case HEngine::Rigidbody2DComponent::BodyType::Kinematic:		return b2_kinematicBody;
-		}
-		HE_CORE_ASSERT(false, "Unknown body type");
-		return b2_staticBody;
-	}
 
 	void PhysicsManager::CreateWorld()
 	{
@@ -51,7 +35,7 @@ namespace HEngine
 		if (b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 
 		b2BodyDef bodyDef = b2DefaultBodyDef();
-		bodyDef.type = GetBox2DBodyType(rb2d.Type);
+		bodyDef.type = Utils::Rigidbody2DTypeToBox2DBody(rb2d.Type);
 		bodyDef.position = { transform.Translation.x, transform.Translation.y };
 		bodyDef.rotation = b2MakeRot(transform.Rotation.z);
 
@@ -163,7 +147,7 @@ namespace HEngine
 		if (!b2Body_IsValid(rb2d.RuntimeBodyId)) return;
 		// Retrieve transform from Box2D
 		
-		b2Body_SetType(rb2d.RuntimeBodyId, GetBox2DBodyType(rb2d.Type));
+		b2Body_SetType(rb2d.RuntimeBodyId, Utils::Rigidbody2DTypeToBox2DBody(rb2d.Type));
 		b2Body_SetFixedRotation(rb2d.RuntimeBodyId, rb2d.FixedRotation);
 
 		if (entity.HasComponent<BoxCollider2DComponent>())

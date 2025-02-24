@@ -16,6 +16,9 @@
 #include "HEngine/Core/Buffer.h"
 #include "HEngine/Core/FileSystem.h"
 
+
+#include "HEngine/Project/Project.h"
+
 #define MONO_FIELD_ATTR_PUBLIC 0x0006
 
 namespace HEngine {
@@ -171,7 +174,8 @@ namespace HEngine {
 			return;
 		}
 
-		status = LoadAppAssembly("SandboxProject/Assets/Scripts/Binaries/Sandbox.dll");
+		auto scriptModulePath = Project::GetAssetDirectory() / Project::GetActive()->GetConfig().ScriptModulePath;
+		status = LoadAppAssembly(scriptModulePath);
 		if (!status)
 		{
 			HE_CORE_ERROR("[ScriptEngine] Could not load app assembly.");

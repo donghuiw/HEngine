@@ -9,6 +9,8 @@
 #include "HEngine/Scene/Scene.h"
 #include "HEngine/Scene/Entity.h"
 
+#include "HEngine/Physics/PhysicsManager.h"
+
 #include "mono/metadata/object.h"
 #include "mono/metadata/reflection.h"
 
@@ -103,6 +105,43 @@ namespace HEngine
 			b2Body_ApplyLinearImpulseToCenter(bodyid, b2Vec2{ impulse->x, impulse->y }, wake);
 		}
 
+		static void Rigidbody2DComponent_GetLinearVelocity(UUID entityID, glm::vec2* outLinearVelocity)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			HE_CORE_ASSERT(scene);
+			Entity entity = scene->GetEntityByUUID(entityID);
+			HE_CORE_ASSERT(entity);
+
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+			b2BodyId bodyId = rb2d.RuntimeBodyId;
+			const b2Vec2 linearVelocity = b2Body_GetLinearVelocity(bodyId);
+			*outLinearVelocity = glm::vec2(linearVelocity.x, linearVelocity.y);
+		}
+
+		static Rigidbody2DComponent::BodyType Rigidbody2DComponent_GetType(UUID entityID)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			HE_CORE_ASSERT(scene);
+			Entity entity = scene->GetEntityByUUID(entityID);
+			HE_CORE_ASSERT(entity);
+
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+			b2BodyId bodyID = rb2d.RuntimeBodyId;
+			return Utils::Rigidbody2DTypeFromBox2DBody(b2Body_GetType(bodyID));
+		}
+
+		static void Rigidbody2DComponent_SetType(UUID entityID, Rigidbody2DComponent::BodyType bodyType)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			HE_CORE_ASSERT(scene);
+			Entity entity = scene->GetEntityByUUID(entityID);
+			HE_CORE_ASSERT(entity);
+
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+			b2BodyId bodyID = rb2d.RuntimeBodyId;
+			b2Body_SetType(bodyID, Utils::Rigidbody2DTypeToBox2DBody(bodyType));
+		}
+
 		static bool Input_IsKeyDown(KeyCode keycode)
 		{
 			return Input::IsKeyPressed(keycode);
@@ -166,6 +205,9 @@ namespace HEngine
 
 			HE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulse);
 			HE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulseToCenter);
+			HE_ADD_INTERNAL_CALL(Rigidbody2DComponent_GetLinearVelocity);
+			HE_ADD_INTERNAL_CALL(Rigidbody2DComponent_GetType);
+			HE_ADD_INTERNAL_CALL(Rigidbody2DComponent_SetType);
 
 			HE_ADD_INTERNAL_CALL(Input_IsKeyDown);
 		}
