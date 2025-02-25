@@ -7,6 +7,7 @@ project "ImGui"
 	language "C++"
 	cppdialect "C++17"
 	staticruntime "off"
+	warnings "off" -- 隐藏一些编译警告
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -41,7 +42,3 @@ project "ImGui"
 		runtime "Release"
 		optimize "on"
 		
-
-
-
-

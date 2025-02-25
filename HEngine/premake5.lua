@@ -26,7 +26,8 @@ project "HEngine"
 	{
 		"_CRT_SECURE_NO_WARNINGS",
 		"GLFW_INCLUDE_NONE",
-		"YAML_CPP_STATIC_DEFINE"
+		"YAML_CPP_STATIC_DEFINE",
+		"IMGUI_DEFINE_MATH_OPERATORS"
 	}
 
 	includedirs
@@ -39,6 +40,8 @@ project "HEngine"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.msdfgen}",
+		"%{IncludeDir.msdf_atlas_gen}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.mono}",
@@ -54,6 +57,7 @@ project "HEngine"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"msdf-atlas-gen",
 		"opengl32.lib",
 		"%{Library.mono}",
 		"yaml-cpp"
@@ -65,9 +69,7 @@ project "HEngine"
 	filter "system:windows"
 		systemversion "latest"
 
-		defines
-		{
-		}
+
 
 		links
 		{

@@ -5,6 +5,7 @@ os.chdir(projectDir)
 project "yaml-cpp"
 	kind "StaticLib"
 	language "C++"
+	warnings "off" -- 隐藏一些编译警告
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")

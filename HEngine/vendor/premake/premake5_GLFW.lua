@@ -6,6 +6,7 @@ project "GLFW"
     kind "StaticLib"
     language "C"
     staticruntime "off"
+    warnings "off" -- 隐藏一些编译警告
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")

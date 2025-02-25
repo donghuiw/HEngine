@@ -20,6 +20,9 @@ workspace "HEngine"
 		"MultiProcessorCompile"
 	}
 
+	filter "action:vs*"
+		buildoptions { "/utf-8" }
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 
@@ -30,6 +33,7 @@ group "Dependencies"
 	include "HEngine/vendor/premake/premake5_imgui.lua"
 	include "HEngine/vendor/premake/premake5_yaml.lua"
 	include "HEngine/vendor/premake/premake5_Box2D.lua"
+	include "HEngine/vendor/msdf-atlas-gen"
 
 group ""
 

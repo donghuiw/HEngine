@@ -9,21 +9,27 @@
 #include <spdlog/fmt/ostr.h>
 #pragma warning(pop)
 
-#if FMT_VERSION >= 90000
+
 #include "HEngine/Events/Event.h"
 template <> 
 struct fmt::formatter<HEngine::Event> : ostream_formatter {};
 
-// 为 glm::vec3 提供 fmt::formatter 特化
+// 为 glm::vec3 定义格式化器
 template <>
-struct fmt::formatter<glm::vec3> : fmt::formatter<std::string> {
+struct fmt::formatter<glm::vec3> {
+	// 格式化解析（一般不需要特殊处理）
+	constexpr auto parse(fmt::format_parse_context& ctx) {
+		return ctx.begin();  // 默认不处理其他格式化选项
+	}
+
+	// 格式化 glm::vec3 对象为字符串
 	template <typename FormatContext>
-	auto format(const glm::vec3& vec, FormatContext& ctx) {
-		// 格式化为 (x, y, z)
+	auto format(const glm::vec3& vec, FormatContext& ctx) const {
+		// 格式化为 (x, y, z)，保留3位小数
 		return fmt::format_to(ctx.out(), "({:.3f}, {:.3f}, {:.3f})", vec.x, vec.y, vec.z);
 	}
 };
-#endif
+
 
 namespace HEngine
 {
