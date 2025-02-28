@@ -160,7 +160,7 @@ namespace HEngine
 					MonoType* managedType = mono_reflection_type_from_name(managedTypename.data(), ScriptEngine::GetCoreAssemblyImage());
 					if (!managedType)
 					{
-						HE_CORE_ERROR("Could not find component type {}", managedTypename);
+						HE_CORE_WARN("Could not find component type {}", managedTypename);
 						return;
 					}
 					s_EntityHasComponentFuncs[managedType] = [](Entity entity) { return entity.HasComponent<Component>(); };

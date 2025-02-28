@@ -6,15 +6,11 @@
 #include "FontGeometry.h"
 #include "GlyphGeometry.h"
 
-namespace HEngine
-{
-	struct MSDFData
-	{
-		std::vector<msdf_atlas::GlyphGeometry> Glyphs;		//存储字体中的各个字形（glyph）的几何数据
-		msdf_atlas::FontGeometry FontGeometry;					//包含字体的基线、大小、字形的边界
-	};
+#include "MSDFData.h"
 
-	template<typename T, typename S, int N, msdf_atlas::GeneratorFunction<S,N> GenFunc>
+namespace HEngine {
+
+	template<typename T, typename S, int N, msdf_atlas::GeneratorFunction<S, N> GenFunc>
 	static Ref<Texture2D> CreateAndCacheAtlas(const std::string& fontName, float fontSize, const std::vector<msdf_atlas::GlyphGeometry>& glyphs,
 		const msdf_atlas::FontGeometry& fontGeometry, uint32_t width, uint32_t height)
 	{
@@ -43,12 +39,12 @@ namespace HEngine
 	Font::Font(const std::filesystem::path& filepath)
 		: m_Data(new MSDFData())
 	{
-		msdfgen::FreetypeHandle* ft = msdfgen::initializeFreetype();		//初始化Freetype引擎
+		msdfgen::FreetypeHandle* ft = msdfgen::initializeFreetype();
 		HE_CORE_ASSERT(ft);
 
 		std::string fileString = filepath.string();
 
-		//TODO(Yan): msdfgen::loadFontData loads from memory buffer which we'll need
+		// TODO(Yan): msdfgen::loadFontData loads from memory buffer which we'll need 
 		msdfgen::FontHandle* font = msdfgen::loadFont(ft, fileString.c_str());
 		if (!font)
 		{
@@ -61,11 +57,10 @@ namespace HEngine
 			uint32_t Begin, End;
 		};
 
-
-		//From imgui_draw.cpp
+		// From imgui_draw.cpp
 		static const CharsetRange charsetRanges[] =
 		{
-			{0x0020, 0x00FF}
+			{ 0x0020, 0x00FF }
 		};
 
 		msdf_atlas::Charset charset;
@@ -96,29 +91,68 @@ namespace HEngine
 		atlasPacker.getDimensions(width, height);
 		emSize = atlasPacker.getScale();
 
-		m_AtlasTexture = CreateAndCacheAtlas<uint8_t, float, 3, msdf_atlas::msdfGenerator>("Test", (float)emSize, m_Data->Glyphs, m_Data->FontGeometry, width, height);
-#if 0
-				msdfgen::Shape shape;
-				if (msdfgen::loadGlyph(shape, font, 'C'))			//加载字符 'C' 的形状数据到 shape 变量
-				{
-					shape.normalize();		//将字符轮廓缩放到一个标准的范围
+#define DEFAULT_ANGLE_THRESHOLD 3.0
+#define LCG_MULTIPLIER 6364136223846793005ull
+#define LCG_INCREMENT 1442695040888963407ull
+#define THREAD_COUNT 8
+		// if MSDF || MTSDF
 
-					//														max		  angle
-					msdfgen::edgeColoringSimple(shape, 3.0);
-					//								image          width    height
-					msdfgen::Bitmap<float, 3> msdf(32, 32);
-					//											  range  scale    translation
-					msdfgen::generateMSDF(msdf, shape, 4.0, 1.0, msdfgen::Vector2(4.0, 4.0));
-					msdfgen::savePng(msdf, "output.png");
-				}
+		uint64_t coloringSeed = 0;
+		bool expensiveColoring = false;
+		if (expensiveColoring)
+		{
+			msdf_atlas::Workload([&glyphs = m_Data->Glyphs, &coloringSeed](int i, int threadNo) -> bool {
+				unsigned long long glyphSeed = (LCG_MULTIPLIER * (coloringSeed ^ i) + LCG_INCREMENT) * !!coloringSeed;
+				glyphs[i].edgeColoring(msdfgen::edgeColoringInkTrap, DEFAULT_ANGLE_THRESHOLD, glyphSeed);
+				return true;
+				}, m_Data->Glyphs.size()).finish(THREAD_COUNT);
+		}
+		else {
+			unsigned long long glyphSeed = coloringSeed;
+			for (msdf_atlas::GlyphGeometry& glyph : m_Data->Glyphs)
+			{
+				glyphSeed *= LCG_MULTIPLIER;
+				glyph.edgeColoring(msdfgen::edgeColoringInkTrap, DEFAULT_ANGLE_THRESHOLD, glyphSeed);
+			}
+		}
+
+
+		m_AtlasTexture = CreateAndCacheAtlas<uint8_t, float, 3, msdf_atlas::msdfGenerator>("Test", (float)emSize, m_Data->Glyphs, m_Data->FontGeometry, width, height);
+
+
+#if 0
+		msdfgen::Shape shape;
+		if (msdfgen::loadGlyph(shape, font, 'C'))
+		{
+			shape.normalize();
+			//                      max. angle
+			msdfgen::edgeColoringSimple(shape, 3.0);
+			//           image width, height
+			msdfgen::Bitmap<float, 3> msdf(32, 32);
+			//                     range, scale, translation
+			msdfgen::generateMSDF(msdf, shape, 4.0, 1.0, msdfgen::Vector2(4.0, 4.0));
+			msdfgen::savePng(msdf, "output.png");
+		}
 #endif
-				msdfgen::destroyFont(font);
-				msdfgen::deinitializeFreetype(ft);
+
+		msdfgen::destroyFont(font);
+		msdfgen::deinitializeFreetype(ft);
 	}
 
 	Font::~Font()
 	{
 		delete m_Data;
 	}
+
+
+	Ref<Font> Font::GetDefault()
+	{
+		static Ref<Font> DefaultFont;
+		if (!DefaultFont)
+			DefaultFont = CreateRef<Font>("assets/fonts/opensans/OpenSans-Regular.ttf");
+
+		return DefaultFont;
+	}
+
 }
 

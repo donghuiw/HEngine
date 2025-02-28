@@ -194,6 +194,7 @@ namespace HEngine {
 		shaderc::Compiler compiler;
 		shaderc::CompileOptions options;
 		options.SetTargetEnvironment(shaderc_target_env_vulkan, shaderc_env_version_vulkan_1_2);
+		//options.SetGenerateDebugInfo();
 		const bool optimize = true;
 		if (optimize)
 			options.SetOptimizationLevel(shaderc_optimization_level_performance);
@@ -352,7 +353,34 @@ namespace HEngine {
 		HE_CORE_TRACE("    {0} uniform buffers", resources.uniform_buffers.size());
 		HE_CORE_TRACE("    {0} resources", resources.sampled_images.size());
 
-		HE_CORE_TRACE("Uniform buffers:");
+		HE_CORE_WARN("------------------");
+
+		for (auto& res : resources.stage_outputs) {
+			HE_CORE_INFO("name -- {0}", res.name);
+			HE_CORE_INFO("localtion = {0}", compiler.get_decoration(res.id, spv::DecorationLocation));
+
+			const auto& bufferType = compiler.get_type(res.base_type_id);
+			for (uint32_t i = 0; i < bufferType.member_types.size(); ++i) {
+				HE_CORE_INFO("Member name:   {0}", compiler.get_member_name(res.base_type_id, i));
+			}
+		}
+
+		HE_CORE_WARN("------- INPUT -----------");
+
+		for (auto& res : resources.stage_inputs	) {
+			HE_CORE_INFO("name -- {0}", res.name);
+			HE_CORE_INFO("localtion = {0}", compiler.get_decoration(res.id, spv::DecorationLocation));
+			const auto& bufferType = compiler.get_type(res.base_type_id);
+			for (uint32_t i = 0; i < bufferType.member_types.size(); ++i) {
+				HE_CORE_INFO("Member name:   {0}", compiler.get_member_name(res.base_type_id, i));
+			}
+		}
+
+		HE_CORE_WARN("------- OTHER -----------");
+
+		HE_CORE_WARN("------------------");
+
+		HE_CORE_WARN("Uniform buffers:");
 		for (const auto& resource : resources.uniform_buffers)
 		{
 			const auto& bufferType = compiler.get_type(resource.base_type_id);
@@ -364,6 +392,11 @@ namespace HEngine {
 			HE_CORE_TRACE("    Size = {0}", bufferSize);
 			HE_CORE_TRACE("    Binding = {0}", binding);
 			HE_CORE_TRACE("    Members = {0}", memberCount);
+
+			for (uint32_t i = 0; i < bufferType.member_types.size(); ++i) {
+				HE_CORE_TRACE("Member name:   {0}", compiler.get_member_name(resource.base_type_id, i));
+				HE_CORE_TRACE("Member offset: {0}", compiler.type_struct_member_offset(bufferType, i));
+			}
 		}
 	}
 
@@ -475,5 +508,4 @@ namespace HEngine {
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
-
 }

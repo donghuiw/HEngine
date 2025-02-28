@@ -403,6 +403,8 @@ namespace HEngine
 			}
 		}
 
+		Renderer2D::DrawString("DongHui", Font::GetDefault(), glm::mat4(1.0f), glm::vec4(1.0f));
+
 		Renderer2D::EndScene();
 	}
 
