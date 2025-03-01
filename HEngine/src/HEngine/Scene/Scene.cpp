@@ -252,6 +252,17 @@ namespace HEngine
 				}
 			}
 
+			//Draw text
+			{
+				auto view = m_Registry.view<TransformComponent, TextComponent>();
+				for (auto entity : view)
+				{
+					auto [transform, text] = view.get<TransformComponent, TextComponent>(entity);
+
+					Renderer2D::DrawString(text.TextString, transform.GetTransform(), text, (int)entity);
+				}
+			}
+
 			Renderer2D::EndScene();
 		}
 	}
@@ -403,7 +414,16 @@ namespace HEngine
 			}
 		}
 
-		Renderer2D::DrawString("DongHui", Font::GetDefault(), glm::mat4(1.0f), glm::vec4(1.0f));
+		//Draw text
+		{
+			auto view = m_Registry.view<TransformComponent, TextComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, text] = view.get<TransformComponent, TextComponent>(entity);
+
+				Renderer2D::DrawString(text.TextString,transform.GetTransform(), text, (int)entity);
+			}
+		}
 
 		Renderer2D::EndScene();
 	}
@@ -412,6 +432,11 @@ namespace HEngine
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
 		static_assert(sizeof(T) == 0);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<TextComponent>(Entity entity, TextComponent& component)
+	{
 	}
 
 	template<>

@@ -3,6 +3,7 @@
 #include "HEngine/Core/UUID.h"
 #include "HEngine/Scene/SceneCamera.h"
 #include "HEngine/Renderer/Texture.h"
+#include "HEngine/Renderer/Font.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -166,6 +167,15 @@ namespace HEngine
 		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
 	};
 
+	struct TextComponent
+	{
+		std::string TextString;
+		Ref<Font> FontAsset = Font::GetDefault();
+		glm::vec4 Color{ 1.0f };
+		float Kerning = 0.0f;			//×Ö¼ä¾à
+		float LineSpacing = 0.0f;		//ÐÐ¼ä¾à
+	};
+
 	template<typename... Component>
 	struct ComponentGroup
 	{
@@ -174,5 +184,5 @@ namespace HEngine
 	using AllComponents =
 		ComponentGroup<TransformComponent, SpriteRendererComponent,
 			CircleRendererComponent, CameraComponent, ScriptComponent, NativeScriptComponent,
-			Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent>;
+			Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, TextComponent>;
 }
