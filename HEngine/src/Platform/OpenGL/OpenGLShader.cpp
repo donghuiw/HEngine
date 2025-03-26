@@ -4,6 +4,8 @@
 
 #include <fstream>
 #include <glad/glad.h>
+#include <functional>
+#include <optional>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -82,6 +84,26 @@ namespace HEngine {
 			HE_CORE_ASSERT(false);
 			return "";
 		}
+
+		static std::optional<size_t> GetCachedHash(const std::string& cacheFilePath)
+		{
+			std::ifstream in(cacheFilePath, std::ios::in | std::ios::binary);
+			if (!in.is_open()) return std::nullopt;
+
+			size_t cachedHash;
+			if (in.read(reinterpret_cast<char*>(&cachedHash), sizeof(cachedHash))) {
+				return cachedHash;
+			}
+
+			return std::nullopt;
+		}
+
+		static bool TestSourceHash(const std::string& cacheFilePath, size_t sourceHash)
+		{
+			auto cachedHash = GetCachedHash(cacheFilePath);
+			return cachedHash.has_value() && cachedHash.value() == sourceHash;
+		}
+
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
@@ -194,22 +216,25 @@ namespace HEngine {
 		shaderc::Compiler compiler;
 		shaderc::CompileOptions options;
 		options.SetTargetEnvironment(shaderc_target_env_vulkan, shaderc_env_version_vulkan_1_2);
-		//options.SetGenerateDebugInfo();
 		const bool optimize = true;
 		if (optimize)
 			options.SetOptimizationLevel(shaderc_optimization_level_performance);
 
 		std::filesystem::path cacheDirectory = Utils::GetCacheDirectory();
+		std::hash<std::string> hasher;
 
 		auto& shaderData = m_VulkanSPIRV;
 		shaderData.clear();
+
 		for (auto&& [stage, source] : shaderSources)
 		{
 			std::filesystem::path shaderFilePath = m_FilePath;
 			std::filesystem::path cachedPath = cacheDirectory / (shaderFilePath.filename().string() + Utils::GLShaderStageCachedVulkanFileExtension(stage));
+			std::string hashCachedPath = cachedPath.string() + ".meta";
+			size_t sourceHash = hasher(source);
 
 			std::ifstream in(cachedPath, std::ios::in | std::ios::binary);
-			if (in.is_open())
+			if (in.is_open() && Utils::TestSourceHash(hashCachedPath, sourceHash))
 			{
 				in.seekg(0, std::ios::end);
 				auto size = in.tellg();
@@ -221,6 +246,7 @@ namespace HEngine {
 			}
 			else
 			{
+				// 编译源文件为 SPIR-V
 				shaderc::SpvCompilationResult module = compiler.CompileGlslToSpv(source, Utils::GLShaderStageToShaderC(stage), m_FilePath.c_str(), options);
 				if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 				{
@@ -230,13 +256,23 @@ namespace HEngine {
 
 				shaderData[stage] = std::vector<uint32_t>(module.cbegin(), module.cend());
 
+				// 将 SPIR-V 数据写入缓存文件
 				std::ofstream out(cachedPath, std::ios::out | std::ios::binary);
 				if (out.is_open())
 				{
 					auto& data = shaderData[stage];
 					out.write((char*)data.data(), data.size() * sizeof(uint32_t));
-					out.flush();
-					out.close();
+				}
+
+				// 更新 .meta 文件保存源文件的哈希值
+				std::ofstream metaOut(hashCachedPath, std::ios::out | std::ios::binary);
+				if (metaOut.is_open())
+				{
+					metaOut.write(reinterpret_cast<char*>(&sourceHash), sizeof(sourceHash));
+				}
+				else
+				{
+					HE_CORE_ERROR("Failed to open .meta file for writing: {0}", hashCachedPath);
 				}
 			}
 		}
@@ -257,6 +293,7 @@ namespace HEngine {
 			options.SetOptimizationLevel(shaderc_optimization_level_performance);
 
 		std::filesystem::path cacheDirectory = Utils::GetCacheDirectory();
+		std::hash<std::string> hasher;
 
 		shaderData.clear();
 		m_OpenGLSourceCode.clear();
@@ -264,9 +301,11 @@ namespace HEngine {
 		{
 			std::filesystem::path shaderFilePath = m_FilePath;
 			std::filesystem::path cachedPath = cacheDirectory / (shaderFilePath.filename().string() + Utils::GLShaderStageCachedOpenGLFileExtension(stage));
+			std::string hashCachedPath = cachedPath.string() + ".meta";  // .meta 文件路径
+			size_t sourceHash = hasher(m_OpenGLSourceCode[stage]);
 
 			std::ifstream in(cachedPath, std::ios::in | std::ios::binary);
-			if (in.is_open())
+			if (in.is_open() && Utils::TestSourceHash(hashCachedPath, sourceHash))  // 判断源文件是否修改
 			{
 				in.seekg(0, std::ios::end);
 				auto size = in.tellg();
@@ -278,6 +317,7 @@ namespace HEngine {
 			}
 			else
 			{
+				// 编译源文件为 SPIR-V
 				spirv_cross::CompilerGLSL glslCompiler(spirv);
 				m_OpenGLSourceCode[stage] = glslCompiler.compile();
 				auto& source = m_OpenGLSourceCode[stage];
@@ -291,13 +331,23 @@ namespace HEngine {
 
 				shaderData[stage] = std::vector<uint32_t>(module.cbegin(), module.cend());
 
+				// 保存新的 SPIR-V 数据到缓存文件
 				std::ofstream out(cachedPath, std::ios::out | std::ios::binary);
 				if (out.is_open())
 				{
 					auto& data = shaderData[stage];
 					out.write((char*)data.data(), data.size() * sizeof(uint32_t));
-					out.flush();
-					out.close();
+				}
+
+				// 更新 .meta 文件保存新的源文件哈希值
+				std::ofstream metaOut(hashCachedPath, std::ios::out | std::ios::binary);
+				if (metaOut.is_open())
+				{
+					metaOut.write(reinterpret_cast<char*>(&sourceHash), sizeof(sourceHash));
+				}
+				else
+				{
+					HE_CORE_ERROR("Failed to open .meta file for writing: {0}", hashCachedPath);
 				}
 			}
 		}
