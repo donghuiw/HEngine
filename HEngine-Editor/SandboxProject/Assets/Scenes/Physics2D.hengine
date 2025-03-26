@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 5134011587522944740
+  - Entity: 1
     TagComponent:
       Tag: Floor
     TransformComponent:
@@ -19,7 +19,7 @@ Entities:
       Density: 1
       Friction: 0.5
       Restitution: 0
-  - Entity: 15045535320033348975
+  - Entity: 2
     TagComponent:
       Tag: Player
     TransformComponent:
@@ -42,7 +42,7 @@ Entities:
       Density: 0.879999995
       Friction: 0.100000001
       Restitution: 0.819999993
-  - Entity: 16672940118998907085
+  - Entity: 3
     TagComponent:
       Tag: Floor
     TransformComponent:
@@ -61,7 +61,7 @@ Entities:
       Density: 1
       Friction: 0.5
       Restitution: 0
-  - Entity: 4793924497264767156
+  - Entity: 4
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -83,7 +83,7 @@ Entities:
       ClassName: Sandbox.Camera
       ScriptFields:
         []
-  - Entity: 8804479042241551551
+  - Entity: 5
     TagComponent:
       Tag: Circle
     TransformComponent:

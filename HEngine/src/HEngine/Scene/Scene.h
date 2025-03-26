@@ -71,6 +71,7 @@ namespace HEngine
 		bool m_IsRunning = false;
 		bool m_IsPaused = false;
 		int m_StepFrames = 0;
+		UUID m_maxID = 0;
 
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
 

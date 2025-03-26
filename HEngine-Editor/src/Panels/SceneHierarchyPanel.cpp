@@ -40,7 +40,11 @@ namespace HEngine
 
 		if (m_Context)
 		{
-			for (auto entity : m_Context->m_Registry.view<entt::entity>())
+			auto idView = m_Context->m_Registry.group<IDComponent>();
+
+			idView.sort<IDComponent>([](const IDComponent& lhs, const IDComponent& rhs) {return lhs.ID < rhs.ID; });
+
+			for (auto entity : idView)
 			{
 				DrawEntityNode({ entity, m_Context.get() });
 			}

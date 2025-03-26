@@ -373,7 +373,13 @@ namespace HEngine {
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
-		m_Scene->m_Registry.group<>(entt::get<TransformComponent>).each([&](auto entityID, auto& transform)
+
+		auto idView = m_Scene->m_Registry.group<IDComponent>();
+		// 按 IDComponent.ID 降序排序
+		idView.sort<IDComponent>([](const IDComponent& lhs, const IDComponent& rhs) {return lhs.ID < rhs.ID;});
+
+		// 遍历排序后的实体
+		idView.each([&](auto entityID, auto& idComp) 
 		{
 			Entity entity = { entityID, m_Scene.get() };
 			if (!entity) return;

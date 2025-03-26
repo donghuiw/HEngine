@@ -71,12 +71,12 @@ namespace HEngine
 		std::unordered_map<UUID, entt::entity> enttMap;
 
 		//Create entities in new scene
-		auto idView = srcSceneRegistry.view<IDComponent>();
+		auto idView = srcSceneRegistry.group<IDComponent>();
 
-		for (int i = idView.size() - 1; i >= 0; i--)
+		idView.sort<IDComponent>([](const IDComponent& lhs, const IDComponent& rhs) {return lhs.ID > rhs.ID;});
+
+		for (auto e : idView)
 		{
-			//view.begin是最后一个实体，如果正循环逐渐加那实体渲染顺序会反过来，所以这里利用指针反过来逐渐减就可以渲染正确顺序
-			entt::entity e = *(idView.begin()+i);
 			UUID uuid = srcSceneRegistry.get<IDComponent>(e).ID;
 			const auto& name = srcSceneRegistry.get<TagComponent>(e).Tag;
 			Entity newEntity = newScene->CreateEntityWithUUID(uuid, name);
@@ -91,7 +91,25 @@ namespace HEngine
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return CreateEntityWithUUID(UUID(), name);
+		UUID uuid = UUID();
+		if (uuid ==1)	//如果是刚运行，UUID默认是从1开始
+		{
+			size_t entityCount = m_Registry.view<IDComponent>().size();
+			if (entityCount != 0)		//判断是否已有实体，如果有，要在最大实体ID的基础上加UUID()
+			{
+				auto view = m_Registry.view<IDComponent>();
+				for (auto entity : view)
+				{
+					UUID id = view.get<IDComponent>(entity).ID;
+					if (id > m_maxID)
+						m_maxID = id;
+				}
+			}
+		}
+		if(m_maxID != 0)
+			uuid = uuid + m_maxID;
+
+		return CreateEntityWithUUID(uuid, name);
 	}
 
 	HEngine::Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)

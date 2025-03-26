@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 6645248621277955267
+  - Entity: 1
     TagComponent:
       Tag: Green Square
     TransformComponent:
@@ -10,7 +10,7 @@ Entities:
     SpriteRendererComponent:
       Color: [0, 1, 0, 1]
       TilingFactor: 1
-  - Entity: 17154294327283940743
+  - Entity: 4
     TagComponent:
       Tag: Red Square
     TransformComponent:
@@ -19,9 +19,9 @@ Entities:
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0, 1]
-      TexturePath: assets\textures\ChernoLogo.png
+      TexturePath: D:\Projects\Git\My_Repository\HEngine\HEngine-Editor\SandboxProject\Assets\Textures\Checkerboard.png
       TilingFactor: 1
-  - Entity: 3503638098362915787
+  - Entity: 3
     TagComponent:
       Tag: Camera A
     TransformComponent:
@@ -39,7 +39,7 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 3263328598497060330
+  - Entity: 2
     TagComponent:
       Tag: Camera B
     TransformComponent:

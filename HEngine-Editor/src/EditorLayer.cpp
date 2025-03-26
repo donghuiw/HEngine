@@ -671,6 +671,8 @@ namespace HEngine
 
 			m_ActiveScene = m_EditorScene;
 			m_EditorScenePath = path;
+
+			
 		}
 	}
 
