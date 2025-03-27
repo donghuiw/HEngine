@@ -25,12 +25,19 @@ namespace HEngine
 	void EditorLayer::OnAttach()
 	{
 		HE_PROFILE_FUNCTION();
-
 		m_IconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
 		m_IconPause = Texture2D::Create("Resources/Icons/PauseButton.png");
 		m_IconStep = Texture2D::Create("Resources/Icons/StepButton.png");
 		m_IconSimulate = Texture2D::Create("Resources/Icons/SimulateButton.png");
 		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
+
+		//std::filesystem::path EditorDir = Project::GetProjectDirectory().parent_path();
+
+		//m_IconPlay = Texture2D::Create((EditorDir / "Resources/Icons/PlayButton.png").string());
+		//m_IconPause = Texture2D::Create((EditorDir / "Resources/Icons/PauseButton.png").string());
+		//m_IconStep = Texture2D::Create((EditorDir / "Resources/Icons/StepButton.png").string());
+		//m_IconSimulate = Texture2D::Create((EditorDir / "Resources/Icons/SimulateButton.png").string());
+		//m_IconStop = Texture2D::Create((EditorDir / "Resources/Icons/StopButton.png").string());
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
